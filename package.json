@@ -1,0 +1,19 @@
+{
+  "name": "typingduck",
+  "version": "1.0.0",
+  "description": "Typing website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josh-velasquez/TypingDuck.git"
+  },
+  "author": "Josh Velasquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josh-velasquez/TypingDuck/issues"
+  },
+  "homepage": "https://github.com/josh-velasquez/TypingDuck#readme"
+}
