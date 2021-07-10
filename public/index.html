@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link current" >SPEED TEST</a>
+                    <a class="nav-link current">SPEED TEST</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="typingTest.html">TYPING TEST</a>
@@ -49,10 +49,11 @@
             </div>
         </div>
         <div class="words">
-            Testing it out this
+            Click the area below to start.
         </div>
         <div class="input">
-            <textarea class="user_input" placeholder="Start typing here..." oninput="processCurrentText()" onfocus="startGame()"></textarea>
+            <textarea class="user_input" placeholder="Start typing here..." oninput="onUserType()"
+                onfocus="onStartTyping()"></textarea>
         </div>
         <div>
             <button class="import" onclick="resetValues()">IMPORT TEXT FILE</button>

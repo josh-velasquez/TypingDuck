@@ -1,274 +1,124 @@
-// const TIME_LIMIT = 60;
-// let timer = null;
-// let elapsedTime = 0;
-// let numCharacter = 0;
-// let errors = 0;
-// let currentQuote = "";
-// let quotes_array = [
-//   "Push yourself, because no one else is going to do it for you.",
-//   "Failure is the condiment that gives success its flavor.",
-//   "Wake up with determination. Go to bed with satisfaction.",
-//   "It's going to be hard, but hard does not mean impossible.",
-//   "Learning never exhausts the mind.",
-//   "The only way to do great work is to love what you do.",
-// ];
-// let quoteNo = 0;
-
-// function onUserType() {
-//   let userInput = document.querySelector(".user_input");
-//   let splitUserInput = userInput.value.split("");
-//   numCharacter++;
-
-//   errors = 0;
-
-//   let textSpan = document.querySelector(".user_input").querySelectorAll("span");
-//   textSpan.forEach((char, i) => {
-//     let typedChar = splitUserInput[i];
-
-//     if (typedChar == null) {
-//       char.classList.remove("correct_char");
-//       char.classList.remove("incorrect_char");
-//     } else if (typedChar === char.innerText) {
-//       char.classList.add("correct_char");
-//       char.classList.remove("incorrect_char");
-//     } else {
-//       char.classList.add("incorrect_char");
-//       char.classList.remove("correct_char");
-
-//       errors++;
-//     }
-//   });
-
-//   let errorText = document.querySelector(".errors").textContent;
-//   errorText = total_errors + errors;
-
-//   if (userInput.value.length === currentQuote.length) {
-//     updateText();
-//     total_errors += errors;
-//     userInput.value = "";
-//   }
-// }
-
-// function updateText() {
-//   let textArea = document.querySelector(".user_input");
-//   textArea.textContent = null;
-//   currentQuote = quotes_array[quoteNo];
-
-//   currentQuote.split("").forEach((char) => {
-//     const charSpan = document.createElement("span");
-//     charSpan.innerText = char;
-//     textArea.appendChild(charSpan);
-//   });
-
-//   if (quoteNo < quotes_array.length - 1) {
-//     quoteNo++;
-//   } else {
-//     quoteNo = 0;
-//   }
-// }
-
-// function updateTime() {
-//   let timerText = document.querySelector(".timer");
-//   if (timerText.value > 0) {
-//     timer--;
-
-//     timeElapsed++;
-
-//     timerText.textContent = timeLeft;
-//   } else {
-//     finishTyping();
-//   }
-// }
-
-// function finishTyping() {
-//   clearInterval(timer);
-//   let userInput = document.querySelector(".user_input");
-//   userInput.disabled = true;
-
-//   let cpm = document.querySelector(".cpm");
-//   cpm.textContent = Math.round((characterTyped / timeElapsed) * 60);
-//   let wpm = document.querySelector(".wpm");
-//   wpm.textContent = Math.round((characterTyped / 5 / timeElapsed) * 60);
-// }
-
-// function onStartTyping() {
-//   updateText();
-//   clearInterval(timer);
-//   timer = setInterval(updateTime, 1000);
-// }
-
-// define the time limit
-let TIME_LIMIT = 60;
-
-// define quotes to be used
-let quotes_array = [
-  "Push yourself, because no one else is going to do it for you.",
-  "Failure is the condiment that gives success its flavor.",
-  "Wake up with determination. Go to bed with satisfaction.",
-  "It's going to be hard, but hard does not mean impossible.",
-  "Learning never exhausts the mind.",
-  "The only way to do great work is to love what you do.",
-];
-
-// selecting required elements
-let timer_text = document.querySelector(".timer");
-let accuracy_text = document.querySelector(".accuracy");
-let error_text = document.querySelector(".errors");
-let cpm_text = document.querySelector(".cpm");
-let wpm_text = document.querySelector(".wpm");
-let quote_text = document.querySelector(".words");
-let input_area = document.querySelector(".user_input");
-let restart_btn = document.querySelector(".import");
-
-let timeLeft = TIME_LIMIT;
-let timeElapsed = 0;
-let total_errors = 0;
-let errors = 0;
-let accuracy = 0;
-let characterTyped = 0;
-let current_quote = "";
-let quoteNo = 0;
+const TIME_LIMIT = 60;
 let timer = null;
+let timeLeft = TIME_LIMIT;
+let elapsedTime = 0;
+let numCharacter = 0;
+let errors = 0;
+let currentText = "";
+let quotes_array = [
+  "Testing this out to see if it works.",
+  "Juan is a troll and that is right."
+];
+let currentTextNum = 0;
+let totalErrors = 0;
 
-function updateQuote() {
-  quote_text.textContent = null;
-  current_quote = quotes_array[quoteNo];
 
-  // separate each character and make an element
-  // out of each of them to individually style them
-  current_quote.split("").forEach((char) => {
-    const charSpan = document.createElement("span");
-    charSpan.innerText = char;
-    quote_text.appendChild(charSpan);
-  });
+let userInput = document.querySelector(".user_input");
 
-  // roll over to the first quote
-  if (quoteNo < quotes_array.length - 1) quoteNo++;
-  else quoteNo = 0;
-}
 
-function processCurrentText() {
-  // get current input text and split it
-  curr_input = input_area.value;
-  curr_input_array = curr_input.split("");
-
-  // increment total characters typed
-  characterTyped++;
-
+function onUserType() {
+  let splitUserInput = userInput.value.split("");
+  numCharacter++;
   errors = 0;
-
-  quoteSpanArray = quote_text.querySelectorAll("span");
-  quoteSpanArray.forEach((char, index) => {
-    let typedChar = curr_input_array[index];
-
-    // character not currently typed
+  let textSpan = document.querySelector(".words").querySelectorAll("span");
+  textSpan.forEach((char, i) => {
+    let typedChar = splitUserInput[i];
     if (typedChar == null) {
       char.classList.remove("correct_char");
       char.classList.remove("incorrect_char");
-
-      // correct character
     } else if (typedChar === char.innerText) {
       char.classList.add("correct_char");
       char.classList.remove("incorrect_char");
-
-      // incorrect character
     } else {
       char.classList.add("incorrect_char");
       char.classList.remove("correct_char");
-
-      // increment number of errors
       errors++;
     }
   });
 
-  // display the number of errors
-  error_text.textContent = total_errors + errors;
-
-  // update accuracy text
-  let correctCharacters = characterTyped - (total_errors + errors);
-  let accuracyVal = (correctCharacters / characterTyped) * 100;
-  accuracy_text.textContent = Math.round(accuracyVal);
-
-  // if current text is completely typed
-  // irrespective of errors
-  if (curr_input.length == current_quote.length) {
-    updateQuote();
-
-    // update total errors
-    total_errors += errors;
-
-    // clear the input area
-    input_area.value = "";
+  let errorText = document.querySelector(".errors");
+  console.log("HERE");
+  errorText.textContent = totalErrors + errors;
+  if (userInput.value.length == currentText.length) {
+    updateText();
+    totalErrors += errors;
+    userInput.value = "";
   }
 }
 
-function startGame() {
-  resetValues();
-  updateQuote();
-
-  // clear old and start a new timer
-  clearInterval(timer);
-  timer = setInterval(updateTimer, 1000);
+function updateTime() {
+  let timerText = document.querySelector(".timer");
+  if (timeLeft > 0) {
+    timeLeft--;
+    timeElapsed++;
+    timerText.textContent = timeLeft;
+  } else {
+    finishTyping();
+  }
 }
+
+function finishTyping() {
+  clearInterval(timer);
+
+  userInput.disabled = true;
+  let textArea = document.querySelector(".words");
+  textArea.textContent = "Click the area below to start."
+  let cpm = document.querySelector(".cpm");
+  cpm.textContent = Math.round((characterTyped / timeElapsed) * 60);
+  let wpm = document.querySelector(".wpm");
+  wpm.textContent = Math.round((characterTyped / 5 / timeElapsed) * 60);
+}
+
 
 function resetValues() {
-  timeLeft = TIME_LIMIT;
+  timer = TIME_LIMIT;
   timeElapsed = 0;
   errors = 0;
-  total_errors = 0;
+  totalErrors = 0;
   accuracy = 0;
   characterTyped = 0;
-  quoteNo = 0;
-  input_area.disabled = false;
+  currentTextNum = 0;
+  userInput.disabled = false;
 
-  input_area.value = "";
-  quote_text.textContent = "Click on the area below to start the game.";
-  accuracy_text.textContent = 100;
-  timer_text.textContent = timeLeft + "s";
-  error_text.textContent = 0;
-  restart_btn.style.display = "none";
-//   cpm_group.style.display = "none";
-//   wpm_group.style.display = "none";
+  userInput.textContent = "";
+
+  let textArea = document.querySelector(".words");
+  textArea.textContent = "Click on the area below to start the game.";
+  let textAccuracy = document.querySelector(".accuracy");
+  textAccuracy.textContent = 100;
+  let cpm = document.querySelector(".cpm");
+  cpm.textContent = 100;
+  let wpm = document.querySelector(".wpm");
+  wpm.textContent = 100;
+  let textError = document.querySelector(".errors");
+  textError.textContent = 0;
 }
 
-function updateTimer() {
-  if (timeLeft > 0) {
-    // decrease the current time left
-    timeLeft--;
+function onStartTyping() {
+  resetValues();
+  updateText();
 
-    // increase the time elapsed
-    timeElapsed++;
-
-    // update the timer text
-    timer_text.textContent = timeLeft + "s";
-  } else {
-    // finish the game
-    finishGame();
-  }
-}
-
-function finishGame() {
-  // stop the timer
   clearInterval(timer);
+  timer = setInterval(updateTime, 1000);
+}
 
-  // disable the input area
-  input_area.disabled = true;
 
-  // show finishing text
-  quote_text.textContent = "Click on restart to start a new game.";
+function updateText() {
+  let userInput = document.querySelector(".user_input");
+  userInput.textContent = null;
+  let textArea = document.querySelector(".words")
+  textArea.textContent = null;
+  currentText = quotes_array[currentTextNum];
 
-  // display restart button
-  restart_btn.style.display = "block";
+  currentText.split("").forEach((char) => {
+    const charSpan = document.createElement("span");
+    charSpan.innerText = char;
+    textArea.appendChild(charSpan);
+  });
 
-  // calculate cpm and wpm
-  cpm = Math.round((characterTyped / timeElapsed) * 60);
-  wpm = Math.round((characterTyped / 5 / timeElapsed) * 60);
-
-  // update cpm and wpm text
-  cpm_text.textContent = cpm;
-  wpm_text.textContent = wpm;
-
-  // display the cpm and wpm
-  cpm_group.style.display = "block";
-  wpm_group.style.display = "block";
+  if (currentTextNum < quotes_array.length - 1) {
+    currentTextNum++;
+  } else {
+    currentTextNum = 0;
+  }
 }
