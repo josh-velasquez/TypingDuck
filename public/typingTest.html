@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link current" >SPEED TEST</a>
+                    <a class="nav-link" href="index.html">SPEED TEST</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="typingTest.html">TYPING TEST</a>
+                    <a class="nav-link current">TYPING TEST</a>
                 </li>
             </ul>
         </div>
@@ -36,10 +36,6 @@
                 <div class="cpm">100</div>
             </div>
             <div class="infoBox">
-                <h3>Errors</h3>
-                <div class="errors">60</div>
-            </div>
-            <div class="infoBox">
                 <h3>TIMER</h3>
                 <div class="timer">60</div>
             </div>
@@ -52,10 +48,10 @@
             Testing it out this
         </div>
         <div class="input">
-            <textarea class="user_input" placeholder="Start typing here..." oninput="processCurrentText()" onfocus="startGame()"></textarea>
+            <textarea class="user_input" placeholder="Start typing here..." oninput="onUserType()"></textarea>
         </div>
         <div>
-            <button class="import" onclick="resetValues()">IMPORT TEXT FILE</button>
+            <button class="import">IMPORT TEXT FILE</button>
         </div>
     </div>
     <script src="logic.js"></script>
@@ -70,12 +66,6 @@
         </div>
         <div>
             <a href="mailto:joshvelasquez6@gmail.com">
-                <img class="icon" src="assets/mail.png" />
-            </a>
-        </div>
-        <div>
-            <a href="#">
-                Tina
                 <img class="icon" src="assets/mail.png" />
             </a>
         </div>

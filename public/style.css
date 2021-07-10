@@ -1,5 +1,5 @@
 body {
-  background-color: #ef6046;
+  background-color: #2f243a;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -9,51 +9,80 @@ html {
   scroll-behavior: smooth;
 }
 
+h3 {
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
 .words {
-  background-color: red;
-  height: 200px;
+  background-color: #f1ddcf;
   font-size: 1.5rem;
+  padding: 20px;
+  border-radius: 10px;
+  color: #2e2621;
+  font-weight: 600;
 }
 
 .infoBox {
   padding: 10px;
   text-align: center;
-  background-color: cyan;
   display: flex;
-  flex-direction: row;
+  color: #2e2621;
+  flex-direction: column;
+  background-color: #e1b2b2;
+  width: 18%;
+  border-radius: 10px;
 }
 
 .input {
-  background-color: coral;
   text-align: center;
-  padding: 20px;
+  width: 100%;
+  margin: 20px 0px;
 }
 
 .user_input {
-  width: 60%;
+  color: #2f243a;
   height: 80px;
+  width: 100%;
   font-size: 1.5rem;
   font-weight: 600;
   border: 0px;
-  margin: 15px;
   padding: 20px;
+  border-radius: 10px;
+  opacity: 1;
+}
+
+.nav-link {
+  color: whitesmoke;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: #e1b2b2;
+}
+
+.current {
+  color: #e1b2b2;
+}
+
+.user_input::placeholder {
+  color: #2f243a;
 }
 
 .container {
-  background-color: antiquewhite;
   justify-content: center;
   display: flex;
   flex-direction: column;
   height: 50%;
+  width: 1100px !important;
 }
 
 .statistics {
-  background-color: blueviolet;
   display: flex;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 100px;
+  margin-bottom: 20px;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .contact {
@@ -61,6 +90,22 @@ html {
   flex-flow: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.import {
+  background-color: #2f243a;
+  font-weight: 600;
+  border: 2px solid #e1b2b2;
+  border-radius: 10px;
+  color: #e1b2b2;
+  padding: 15px;
+  font-size: 1rem;
+}
+
+.import:hover {
+  background-color: #e1b2b2;
+  border: 2px solid #e1b2b2;
+  color: #2f243a;
 }
 
 .logo {
@@ -77,6 +122,11 @@ html {
   border-bottom: 2px solid transparent;
 }
 
-footer {
-  background-color: whitesmoke;
+.incorrect_char {
+  color: red;
+  text-decoration: underline;
+}
+
+.correct_char {
+  color: darkgreen;
 }
