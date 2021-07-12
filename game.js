@@ -121,6 +121,7 @@ function startGame() {
 }
 
 function resetValues() {
+    console.log("HERE: " + TIME_LIMIT)
     timeLeft = TIME_LIMIT;
     timeElapsed = 0;
     errors = 0;

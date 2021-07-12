@@ -25,16 +25,15 @@ let quotes_array = ["Out of the night that covers me,",
 let currentTextNum = 0;
 let totalErrors = 0;
 
-
 let userInput = document.querySelector(".user_input");
 let accuracyText = document.querySelector(".accuracy");
-
+let textArea = document.querySelector(".words");
 
 function onUserType() {
   let splitUserInput = userInput.value.split("");
   characterTyped++;
   errors = 0;
-  let textSpan = document.querySelector(".words").querySelectorAll("span");
+  let textSpan = textArea.querySelectorAll("span");
   textSpan.forEach((char, i) => {
     let typedChar = splitUserInput[i];
     if (typedChar == null) {
@@ -77,17 +76,20 @@ function finishTyping() {
   clearInterval(timer);
   userInput.value = "";
   userInput.disabled = true;
-  let textArea = document.querySelector(".words");
-  textArea.textContent = "Click the area below to start."
+  textArea.textContent = "Click the area below to start.";
   let cpm = document.querySelector(".cpm");
   cpm.textContent = Math.round((characterTyped / timeElapsed) * 60);
   let wpm = document.querySelector(".wpm");
   wpm.textContent = Math.round((characterTyped / 5 / timeElapsed) * 60);
 }
 
+function reset() {
+  clearInterval(timer);
+  resetValues();
+}
 
 function resetValues() {
-  timer = TIME_LIMIT;
+  timeLeft = TIME_LIMIT;
   timeElapsed = 0;
   errors = 0;
   totalErrors = 0;
@@ -95,10 +97,7 @@ function resetValues() {
   characterTyped = 0;
   currentTextNum = 0;
   userInput.disabled = false;
-
-  userInput.textContent = "";
-
-  let textArea = document.querySelector(".words");
+  userInput.value = "";
   textArea.textContent = "Click on the area below to start the game.";
   let textAccuracy = document.querySelector(".accuracy");
   textAccuracy.textContent = "NA";
@@ -108,22 +107,21 @@ function resetValues() {
   wpm.textContent = "NA";
   let textError = document.querySelector(".errors");
   textError.textContent = 0;
+  let timerText = document.querySelector(".timer");
+  timerText.textContent = timeLeft;
 }
 
 function onStartTyping() {
   resetValues();
   updateText();
-
   clearInterval(timer);
   timer = setInterval(updateTime, 1000);
 }
 
-
 function updateText() {
   let userInput = document.querySelector(".user_input");
-  userInput.textContent = null;
-  let textArea = document.querySelector(".words")
-  textArea.textContent = null;
+  userInput.value = "";
+  textArea.textContent = "";
   currentText = quotes_array[currentTextNum];
 
   currentText.split("").forEach((char) => {
@@ -140,5 +138,5 @@ function updateText() {
 }
 
 function importTextFile() {
-  
+  console.log("Importing text file.");
 }
