@@ -55,8 +55,9 @@
             <textarea class="user_input" placeholder="Start typing here..." oninput="onUserType()"
                 onfocus="onStartTyping()"></textarea>
         </div>
-        <div>
-            <button class="import" onclick="resetValues()">IMPORT TEXT FILE</button>
+        <div class="buttons_area">
+            <button class="restart" onclick="resetValues()">RESET GAME</button>
+            <button class="import" onclick="importTextFile()">IMPORT TEXT FILE</button>
         </div>
     </div>
     <script src="logic.js"></script>

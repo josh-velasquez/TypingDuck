@@ -75,9 +75,8 @@ function updateTime() {
 
 function finishTyping() {
   clearInterval(timer);
-
+  userInput.value = "";
   userInput.disabled = true;
-  userInput.textContent = "";
   let textArea = document.querySelector(".words");
   textArea.textContent = "Click the area below to start."
   let cpm = document.querySelector(".cpm");
@@ -138,4 +137,8 @@ function updateText() {
   } else {
     currentTextNum = 0;
   }
+}
+
+function importTextFile() {
+  
 }
