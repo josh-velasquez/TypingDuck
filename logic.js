@@ -37,7 +37,6 @@ function onUserType() {
   });
 
   let errorText = document.querySelector(".errors");
-  console.log("HERE");
   errorText.textContent = totalErrors + errors;
   if (userInput.value.length == currentText.length) {
     updateText();
