@@ -103,9 +103,8 @@ h3 {
 }
 
 .buttons_area {
-  flex-direction: flex;
-  flex-flow: row;
-  justify-content: space-evenly;
+  display: flex;
+  justify-content: space-between;
 }
 
 .restart:hover {
