@@ -89,6 +89,7 @@ h3 {
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
+  padding-top: 10%;
   justify-content: space-evenly;
 }
 
@@ -153,6 +154,12 @@ h3 {
 }
 
 /***/
+
+.header_title {
+  color: whitesmoke;
+  text-align: center;
+  padding-bottom: 10px;
+}
 
 .keyboard {
   text-align: center;
