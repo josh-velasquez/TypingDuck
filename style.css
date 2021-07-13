@@ -73,7 +73,7 @@ h3 {
   justify-content: center;
   display: flex;
   flex-direction: column;
-  height: 50%;
+  height: 80%;
   width: 1100px !important;
 }
 
@@ -287,4 +287,12 @@ h3 {
 
 .keyboard > .keyboard__row {
   text-align: center;
+}
+
+.typingResult {
+  margin-top: 20px;
+  color: whitesmoke;
+  display: block;
+  flex-direction: row;
+  justify-content: center;
 }

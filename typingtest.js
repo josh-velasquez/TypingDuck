@@ -48,6 +48,10 @@ document.body.addEventListener('keydown', function (e) {
     }
 
     key.setAttribute('data-pressed', 'on');
+    console.log("KEY: " + e.key);
+
+    // let userInput = document.querySelector('.user_input');
+    // userInput.value += e.key;
 });
 
 document.body.addEventListener('keyup', function (e) {
