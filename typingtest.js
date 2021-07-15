@@ -81,6 +81,11 @@ function updateProgress() {
     let percent = Math.round((numKeyStrokes / NUM_KEYS) * 100);
     progressBar.style.width = percent + "%";
     let progressPercent = document.querySelector(".progressPercent");
+    if (percent > 50) {
+      progressPercent.style.color = "#2f243a"
+    } else {
+      progressPercent.style.color = "#fff"
+    }
     progressPercent.textContent = percent + "%";
   }
 }

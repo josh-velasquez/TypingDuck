@@ -184,9 +184,9 @@ h3 {
 
 .keyboard__row > * {
   position: relative;
-  background: #333;
+  background: #2f243a;
   text-align: center;
-  color: #eee;
+  color: #e1b2b2;
   float: left;
   border-radius: 0.3em;
   margin: 0.2em;
@@ -197,7 +197,7 @@ h3 {
   cursor: pointer;
   -webkit-user-select: none;
   border: 1px solid #444;
-  box-shadow: 0 0.2em 0 0.05em #222;
+  box-shadow: 0 0.2em 0 0.05em #e1b2b2;
   border-bottom-color: #555;
 }
 
@@ -207,8 +207,8 @@ h3 {
 
 .keyboard__row > div[data-pressed],
 .keyboard__row > div:active {
-  background: #2a2a2a;
-  color: #aaa;
+  background: #e1b2b2;
+  color: #2f243a;
   position: relative;
   top: 0.2em;
   box-shadow: 0 0 0 0.05em black;
@@ -235,7 +235,7 @@ h3 {
 }
 
 .key--double > * {
-  padding-top: 0.0em;
+  padding-top: 0em;
 }
 
 .key--letter {
@@ -298,25 +298,29 @@ h3 {
 }
 
 .progressBar {
-  width: 100%;
-  background-color: grey;
-  margin-top: 30px;
+  width: 667px;
   border-radius: 8px;
+  margin: 30px auto;
+  border: 2px solid #e1b2b2;
 }
 
 #progressBar {
   width: 0%;
-  height: 30px;
-  border-radius: 8px;
-  background-color: green;
+  height: 40px;
+  border-radius: 7px;
+  background-color: #e1b2b2;
 }
 .progressPercent {
-  text-align: center;
   position: absolute;
-  z-index: 9;
-  margin-left: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  margin-top: 5px;
 }
 
 #importFile {
-  /* display: none; */
+  display: none;
 }
