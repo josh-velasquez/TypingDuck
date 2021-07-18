@@ -87,16 +87,20 @@ function updateProgress(key) {
   let percent = Math.round((numKeyStrokes / NUM_KEYS) * 100);
   progressBar.style.width = percent + "%";
   let progressPercent = document.querySelector(".progressPercent");
+  progressPercent.textContent = percent + "%";
   let newKey = getLowerCaseId(key);
   highlightKey(newKey);
+  updatePercentColour(percent);
+}
 
-  // Change key colour after 50% through
+// Change key colour after 50% through
+function updatePercentColour(percent) {
+  let progressPercent = document.querySelector(".progressPercent");
   if (percent > 50) {
     progressPercent.style.color = "#2f243a";
   } else {
     progressPercent.style.color = "#fff";
   }
-  progressPercent.textContent = percent + "%";
 }
 
 function highlightKey(key) {
@@ -112,29 +116,6 @@ function resetKeyHighlight(key) {
   currentKey.style.backgroundColor = "#2f243a";
   currentKey.style.color = "#e1b2b2"
 }
-
-function readSingleFile(e) {
-  var file = e.target.files[0];
-  if (!file) {
-    return;
-  }
-  var reader = new FileReader();
-  reader.onload = function (e) {
-    var contents = e.target.result;
-    displayContents(contents);
-  };
-  reader.readAsText(file);
-}
-
-function displayContents(contents) {
-  var element = document.getElementById("file-content");
-  element.textContent = contents;
-}
-
-document
-  .getElementById("file-input")
-  .addEventListener("change", readSingleFile, false);
-
 
 function getLowerCaseId(key) {
   return key.length > 1 ? key : key.toLowerCase();
@@ -152,3 +133,7 @@ function restart() {
   progressPercent.textContent = 0 + "%";
   progressPercent.style.color = "#fff";
 }
+
+// function numberOfKeys() {
+
+// }

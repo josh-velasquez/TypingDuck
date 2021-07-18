@@ -81,6 +81,7 @@ function finishTyping() {
   cpm.textContent = Math.round((characterTyped / timeElapsed) * 60);
   let wpm = document.querySelector(".wpm");
   wpm.textContent = Math.round((characterTyped / 5 / timeElapsed) * 60);
+  disableImportStatus(false);
 }
 
 function reset() {
@@ -109,6 +110,7 @@ function resetValues() {
   textError.textContent = 0;
   let timerText = document.querySelector(".timer");
   timerText.textContent = timeLeft;
+  disableImportStatus(false);
 }
 
 function onStartTyping() {
@@ -116,6 +118,12 @@ function onStartTyping() {
   updateText();
   clearInterval(timer);
   timer = setInterval(updateTime, 1000);
+  disableImportStatus(true);
+}
+
+function disableImportStatus(disable) {
+  let importFile = document.getElementById("importFile");
+  importFile.disabled = disable;
 }
 
 function updateText() {
