@@ -29,12 +29,6 @@ body {
   right: 0;
 }
 
-.textbody {
-  color: grey;
-  font-size: 1.5em;
-  text-align: justify;
-}
-
 .statistics-values {
   text-align: right;
   width: 100%;
@@ -58,4 +52,27 @@ body {
 .footer {
   display: flex;
   flex-direction: row;
+}
+
+.navigation {
+  font-size: 1.5em;
+}
+
+.textbody {
+  font-size: 1.5em;
+  text-align: justify;
+  line-height: 35px;
+  outline: 0px;
+  overflow: hidden;
+}
+
+.text {
+  color: darkgray;
+  height: fit-content;
+  overflow: hidden;
+  width: 100%;
+  align-content: flex-start;
+  font-family: "Roboto Mono";
+  display: flex;
+  flex-wrap: wrap;
 }

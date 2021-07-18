@@ -4,7 +4,7 @@ import TypingSpeed from './components/typingtest'
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="ui container">
       <Header />
       <TypingSpeed />
     </div>
