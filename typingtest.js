@@ -1,9 +1,5 @@
 var keyPressed = [];
 
-let duckBackround = document.getElementById("duckBackground");
-duckBackround.style.backgroundImage = "url(https://images.unsplash.com/photo-1558217512-498092c88af0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2378&q=80)";
-
-
 function getKey(e) {
   var location = e.location;
   var selector;
@@ -84,24 +80,37 @@ var numKeyStrokes = 0;
 const NUM_KEYS = 104;
 
 function updateProgress(key) {
-  if (numKeyStrokes <= NUM_KEYS) {
-    let progressBar = document.getElementById("progressBar");
-    let percent = Math.round((numKeyStrokes / NUM_KEYS) * 100);
-    progressBar.style.width = percent + "%";
-    let progressPercent = document.querySelector(".progressPercent");
-
-    // Make key vanish when pressed
-    let currentKey = document.getElementById(key);
-    currentKey.style.visibility = "hidden";
-
-    // Change key colour after 50% through
-    if (percent > 50) {
-      progressPercent.style.color = "#2f243a";
-    } else {
-      progressPercent.style.color = "#fff";
-    }
-    progressPercent.textContent = percent + "%";
+  if (numKeyStrokes > NUM_KEYS) {
+    return;
   }
+  let progressBar = document.getElementById("progressBar");
+  let percent = Math.round((numKeyStrokes / NUM_KEYS) * 100);
+  progressBar.style.width = percent + "%";
+  let progressPercent = document.querySelector(".progressPercent");
+  let newKey = getLowerCaseId(key);
+  highlightKey(newKey);
+
+  // Change key colour after 50% through
+  if (percent > 50) {
+    progressPercent.style.color = "#2f243a";
+  } else {
+    progressPercent.style.color = "#fff";
+  }
+  progressPercent.textContent = percent + "%";
+}
+
+function highlightKey(key) {
+  let newKey = getLowerCaseId(key);
+  let currentKey = document.getElementById(newKey);
+  currentKey.style.backgroundColor = "#e1b2b2";
+  currentKey.style.color = "#2f243a"
+}
+
+function resetKeyHighlight(key) {
+  let newKey = getLowerCaseId(key);
+  let currentKey = document.getElementById(newKey);
+  currentKey.style.backgroundColor = "#2f243a";
+  currentKey.style.color = "#e1b2b2"
 }
 
 function readSingleFile(e) {
@@ -126,9 +135,20 @@ document
   .getElementById("file-input")
   .addEventListener("change", readSingleFile, false);
 
-const fileSelector = document.getElementById("importFile");
-fileSelector.addEventListener("change", (event) => {
-  const fileList = event.target.files;
-  console.log(fileList);
-  // console.log("HERE")
-});
+
+function getLowerCaseId(key) {
+  return key.length > 1 ? key : key.toLowerCase();
+}
+
+function restart() {
+  keyPressed.forEach(key => {
+    resetKeyHighlight(key);
+  });
+  keyPressed = [];
+  numKeyStrokes = 0;
+  let progressBar = document.getElementById("progressBar");
+  progressBar.style.width = 0 + "%";
+  let progressPercent = document.querySelector(".progressPercent");
+  progressPercent.textContent = 0 + "%";
+  progressPercent.style.color = "#fff";
+}

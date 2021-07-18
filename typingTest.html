@@ -27,7 +27,6 @@
     </nav>
     <div class="container">
         <h1 class="header_title">typing duck.</h1>
-        <div id="duckBackground"></div>
         <div class="keyboard">
             <div class="keyboard__row keyboard__row--h1">
                 <div data-key="27" class="key--word" id="Escape">
@@ -244,9 +243,12 @@
             </div>
         </div>
         <div class="progressBar">
-            <div class="progressPercent"></div>
+            <div class="progressPercent">0%</div>
             <div id="progressBar">
             </div>
+        </div>
+        <div class="reset_area">
+            <button class="reset" style="width: 100%;" onclick="restart()">RESTART</button>
         </div>
     </div>
     <script src="typingtest.js" type="text/javascript"></script>

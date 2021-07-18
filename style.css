@@ -93,7 +93,12 @@ h3 {
   justify-content: space-evenly;
 }
 
-.restart {
+.buttons_area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reset {
   background-color: #2f243a;
   font-weight: 600;
   border: 2px solid #e1b2b2;
@@ -103,12 +108,7 @@ h3 {
   font-size: 1rem;
 }
 
-.buttons_area {
-  display: flex;
-  justify-content: space-between;
-}
-
-.restart:hover {
+.reset:hover {
   background-color: #e1b2b2;
   border: 2px solid #e1b2b2;
   color: #2f243a;
@@ -323,4 +323,9 @@ h3 {
 
 #importFile {
   display: none;
+}
+
+.reset_area {
+  align-self: center;
+  width: 670px;
 }

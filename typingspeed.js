@@ -139,4 +139,12 @@ function updateText() {
 
 function importTextFile() {
   console.log("Importing text file.");
+
+  const fileSelector = document.getElementById("importFile");
+  fileSelector.addEventListener("change", (event) => {
+    const fileList = event.target.files;
+    console.log(fileList);
+    // console.log("HERE")
+  });
 }
+
