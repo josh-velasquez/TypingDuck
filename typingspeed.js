@@ -137,14 +137,20 @@ function updateText() {
   }
 }
 
-function importTextFile() {
-  console.log("Importing text file.");
+function convertTextFileToArray(textFile) {
+  let reader = new FileReader();
+  reader.addEventListener('load', function (e) {
+    let text = e.target.result;
+    quotes_array = text.split("\r\n");
+  });
+  reader.readAsText(textFile);
+}
 
+function importTextFile() {
   const fileSelector = document.getElementById("importFile");
   fileSelector.addEventListener("change", (event) => {
     const fileList = event.target.files;
-    console.log(fileList);
-    // console.log("HERE")
+    convertTextFileToArray(fileList[0])
   });
 }
 
