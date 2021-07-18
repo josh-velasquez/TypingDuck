@@ -1,17 +1,12 @@
-import assets from 'assets/rubber-du';
 import './App.css';
+import Header from './components/header'
+import TypingSpeed from './components/typingtest'
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <div class="ui stackable menu">
-        <div class="item">
-          <img src="assets/rubber-duck.png" />
-        </div>
-        <a class="item">Features</a>
-        <a class="item">Testimonials</a>
-        <a class="item">Sign-in</a>
-      </div>
+      <Header />
+      <TypingSpeed />
     </div>
   );
 }

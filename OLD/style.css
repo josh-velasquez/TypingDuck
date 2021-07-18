@@ -330,14 +330,15 @@ h3 {
 }
 
 .rad,
-.ckb{
+.ckb {
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
 .rad > input,
-.ckb > input{ /* HIDE ORG RADIO & CHECKBOX */
+.ckb > input {
+  /* HIDE ORG RADIO & CHECKBOX */
   position: absolute;
   opacity: 0;
   width: 0;
@@ -346,10 +347,10 @@ h3 {
 /* RADIO & CHECKBOX STYLES */
 /* DEFAULT <i> STYLE */
 .rad > i,
-.ckb > i{ 
+.ckb > i {
   display: inline-block;
   vertical-align: middle;
-  width:  16px;
+  width: 16px;
   height: 16px;
   border-radius: 50%;
   transition: 0.2s;
