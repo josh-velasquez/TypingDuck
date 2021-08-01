@@ -1,20 +1,23 @@
-import React from 'react'
-import Logo from '../assets/rubber-duck.png';
+import React from "react";
+import Logo from "../assets/rubber-duck.png";
+import { Link } from "react-router-dom";
 
-class Header extends React.Component {
-    render() {
-        return (
-            <div className="ui secondary menu inverted">
-                <div className="item">
-                    <img className="logo" src={Logo} />
-                </div>
-                <div className="right menu navigation">
-                    <a className="item">speed test</a>
-                    <a className="item">typing test</a>
-                </div>
-            </div>
-        )
-    }
-}
+const Header = () => {
+  return (
+    <div className="ui secondary menu inverted">
+      <div className="item">
+        <img className="logo" src={Logo} alt="#" />
+      </div>
+      <div className="right menu navigation">
+        <Link to="/" className="item">
+          speed test
+        </Link>
+        <Link to="/typingtest" className="item">
+          typing test
+        </Link>
+      </div>
+    </div>
+  );
+};
 
 export default Header;

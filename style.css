@@ -1,0 +1,326 @@
+body {
+  background-color: #2f243a;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.words {
+  background-color: #f1ddcf;
+  font-size: 1.5rem;
+  padding: 20px;
+  border-radius: 10px;
+  color: #2e2621;
+  font-weight: 600;
+}
+
+.infoBox {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  color: #2e2621;
+  flex-direction: column;
+  background-color: #e1b2b2;
+  width: 18%;
+  border-radius: 10px;
+}
+
+.input {
+  text-align: center;
+  width: 100%;
+  margin: 20px 0px;
+}
+
+.user_input {
+  color: #2f243a;
+  height: 80px;
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border: 0px;
+  padding: 20px;
+  border-radius: 10px;
+  opacity: 1;
+}
+
+.nav-link {
+  color: whitesmoke;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: #e1b2b2;
+}
+
+.current {
+  color: #e1b2b2;
+}
+
+.user_input::placeholder {
+  color: #2f243a;
+}
+
+.container {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  width: 1100px !important;
+}
+
+.statistics {
+  display: flex;
+  padding-top: 100px;
+  margin-bottom: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.contact {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  padding-top: 10%;
+  justify-content: space-evenly;
+}
+
+.restart {
+  background-color: #2f243a;
+  font-weight: 600;
+  border: 2px solid #e1b2b2;
+  border-radius: 10px;
+  color: #e1b2b2;
+  padding: 15px;
+  font-size: 1rem;
+}
+
+.buttons_area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.restart:hover {
+  background-color: #e1b2b2;
+  border: 2px solid #e1b2b2;
+  color: #2f243a;
+}
+
+.import {
+  background-color: #2f243a;
+  font-weight: 600;
+  border: 2px solid #e1b2b2;
+  border-radius: 10px;
+  color: #e1b2b2;
+  padding: 15px;
+  font-size: 1rem;
+}
+
+.import:hover {
+  background-color: #e1b2b2;
+  border: 2px solid #e1b2b2;
+  color: #2f243a;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  transition: 500ms;
+  border-bottom: 2px solid transparent;
+}
+
+.icon {
+  height: 70px;
+  width: 70px;
+  transition: 500ms;
+  border-bottom: 2px solid transparent;
+}
+
+.incorrect_char {
+  color: red;
+  text-decoration: underline;
+}
+
+.correct_char {
+  color: darkgreen;
+}
+
+/*************************************************/
+
+.header_title {
+  color: whitesmoke;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.keyboard {
+  text-align: center;
+  font-size: 13px;
+  font-family: sans-serif;
+}
+
+.keyboard__row {
+  display: inline-block;
+  height: 3em;
+  margin: 0.2em;
+}
+
+.keyboard__row--h1 {
+  height: 1.7em;
+  line-height: 1.4em;
+}
+
+.keyboard__row--h3 {
+  height: 3.3em;
+}
+
+.keyboard__row > * {
+  position: relative;
+  background: #2f243a;
+  text-align: center;
+  color: #e1b2b2;
+  float: left;
+  border-radius: 0.3em;
+  margin: 0.2em;
+  padding: 0.2em;
+  width: 3.3em;
+  height: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  -webkit-user-select: none;
+  border: 1px solid #444;
+  box-shadow: 0 0.2em 0 0.05em #e1b2b2;
+  border-bottom-color: #555;
+}
+
+.keyboard__row--h1 > div {
+  width: 3.5em;
+}
+
+.keyboard__row > div[data-pressed],
+.keyboard__row > div:active {
+  background: #e1b2b2;
+  color: #2f243a;
+  position: relative;
+  top: 0.2em;
+  box-shadow: 0 0 0 0.05em black;
+}
+
+.key--w3 {
+  width: 4.6em;
+}
+
+.key--w4 {
+  width: 6em;
+}
+
+.key--w5 {
+  width: 6.5em;
+}
+
+.key--w6 {
+  width: 8.3em;
+}
+
+.key--space {
+  width: 18em;
+}
+
+.key--double > * {
+  padding-top: 0em;
+}
+
+.key--letter {
+  line-height: 2.5em;
+}
+
+.key--bottom-left > * {
+  position: absolute;
+  text-align: left;
+  bottom: 0.4em;
+  left: 0.4em;
+}
+
+.key--bottom-right > * {
+  position: absolute;
+  text-align: right;
+  bottom: 0.4em;
+  right: 0.4em;
+}
+
+.key--fn > * {
+  font-size: 0.6em;
+  line-height: 1em;
+  padding-top: 0.6em;
+  padding-right: 1.6em;
+  text-align: right;
+  float: right;
+}
+
+.key--word > * {
+  font-size: 0.8em;
+}
+
+.key--arrow--tall > *,
+.key--arrow > * {
+  font-size: 0.5em;
+  line-height: 3em;
+}
+
+.key--arrow {
+  height: 1.8em;
+  margin-top: 1.7em;
+  line-height: 0.5em;
+}
+
+.key--arrow--tall > * {
+  padding-top: 0.2em;
+}
+
+.keyboard > .keyboard__row {
+  text-align: center;
+}
+
+.typingResult {
+  margin-top: 20px;
+  color: whitesmoke;
+  display: block;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.progressBar {
+  width: 667px;
+  border-radius: 8px;
+  margin: 30px auto;
+  border: 2px solid #e1b2b2;
+}
+
+#progressBar {
+  width: 0%;
+  height: 40px;
+  border-radius: 7px;
+  background-color: #e1b2b2;
+}
+.progressPercent {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  margin-top: 5px;
+}
+
+#importFile {
+  display: none;
+}
