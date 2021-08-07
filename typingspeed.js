@@ -25,6 +25,7 @@ let quotes_array = ["Out of the night that covers me,",
 let currentTextNum = 0;
 let totalErrors = 0;
 
+console.log("TEST")
 let userInput = document.querySelector(".user_input");
 let accuracyText = document.querySelector(".accuracy");
 let textArea = document.querySelector(".words");
