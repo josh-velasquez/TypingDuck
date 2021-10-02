@@ -1,6 +1,6 @@
 import React from "react";
 
-class TypingSpeed extends React.Component {
+class TypingTest extends React.Component {
   renderTypingTest() {
     return (
       <div class="keyboard">
@@ -218,6 +218,13 @@ class TypingSpeed extends React.Component {
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
+=======
+        <div className="textbody">
+          <div className="text">Typing Test</div>
+        </div>
+      </div>
+>>>>>>> 6dad2d34b6a4629bfa74e66d8e6bf11745e2be7e
     );
   }
 
@@ -226,4 +233,4 @@ class TypingSpeed extends React.Component {
   }
 }
 
-export default TypingSpeed;
+export default TypingTest;
