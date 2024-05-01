@@ -1,6 +1,27 @@
-import React from "react";
+import { Key } from "@mui/icons-material";
+import React, { useEffect } from "react";
 
-const KeyboardLayout: React.FC = () => {
+interface KeyboardLayoutInterface {
+  animateWord?: string;
+}
+
+const KeyboardLayout: React.FC<KeyboardLayoutInterface> = ({ animateWord }) => {
+  useEffect(() => {
+    if (animateWord) {
+      animateWord.split("").forEach((letter, index) => {
+        const key = document.querySelector(
+          `[data-char="${letter.toUpperCase()}"]`
+        );
+        if (key) {
+          setTimeout(() => {
+            key.setAttribute("data-pressed", "on");
+            setTimeout(() => key.removeAttribute("data-pressed"), 200);
+          }, 150 * index);
+        }
+      });
+    }
+  }, [animateWord]);
+
   return (
     <div className="keyboard">
       <div className="keyboard__row keyboard__row--h1">
@@ -45,7 +66,6 @@ const KeyboardLayout: React.FC = () => {
         </div>
       </div>
       <div className="keyboard__row">
-        
         <div className="key--double" id="`" data-key="192">
           <div>~</div>
           <div>`</div>
@@ -241,7 +261,7 @@ const KeyboardLayout: React.FC = () => {
           <div>&lt;</div>
           <div>,</div>
         </div>
-        <div className="key--double" id="." data-key="190">
+        <div className="key--double" id="." data-char="." data-key="190">
           <div>&gt;</div>
           <div>.</div>
         </div>

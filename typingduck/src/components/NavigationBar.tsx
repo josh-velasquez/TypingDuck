@@ -11,13 +11,16 @@ const NavigationBar = () => {
       sx={{ background: "transparent", boxShadow: "none" }}
     >
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu">
-          <img
-            src={duckImage}
-            alt="Menu"
-            style={{ width: "36px", height: "36px" }}
-          />
-        </IconButton>
+        <Link to="/">
+          <IconButton edge="start" color="inherit" aria-label="menu">
+            <img
+              src={duckImage}
+              alt="Menu"
+              style={{ width: "36px", height: "36px" }}
+            />
+          </IconButton>
+        </Link>
+
         <Box
           sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
         >
