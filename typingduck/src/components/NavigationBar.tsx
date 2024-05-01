@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useLocation } from "react-router-dom";
+import duckImage from "../assets/new-duck.png";
 
 const NavigationBar = () => {
   const location = useLocation();
@@ -12,7 +12,11 @@ const NavigationBar = () => {
     >
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu">
-          <MenuIcon />
+          <img
+            src={duckImage}
+            alt="Menu"
+            style={{ width: "36px", height: "36px" }}
+          />
         </IconButton>
         <Box
           sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}

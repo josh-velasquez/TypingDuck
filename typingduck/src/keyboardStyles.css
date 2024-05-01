@@ -4,6 +4,10 @@
   font-family: sans-serif;
 }
 
+.keyboard__row--h4 {
+  width: 3.3em;
+}
+
 .keyboard__row {
   display: inline-block;
   height: 3em;

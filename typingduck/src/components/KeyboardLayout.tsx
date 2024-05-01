@@ -5,99 +5,99 @@ const KeyboardLayout: React.FC = () => {
     <div className="keyboard">
       <div className="keyboard__row keyboard__row--h1">
         <div data-key="27" className="key--word" id="Escape">
-          <span>esc</span>{" "}
-        </div>{" "}
+          <span>esc</span>
+        </div>
         <div data-key="112" id="F1" className="key--fn">
-          <span>F1</span>{" "}
-        </div>{" "}
+          <span>F1</span>
+        </div>
         <div data-key="113" id="F2" className="key--fn">
-          <span>F2</span>{" "}
-        </div>{" "}
+          <span>F2</span>
+        </div>
         <div data-key="114" id="F3" className="key--fn">
-          <span>F3</span>{" "}
-        </div>{" "}
+          <span>F3</span>
+        </div>
         <div data-key="115" id="F4" className="key--fn">
-          <span>F4</span>{" "}
-        </div>{" "}
+          <span>F4</span>
+        </div>
         <div data-key="116" id="F5" className="key--fn">
-          <span>F5</span>{" "}
-        </div>{" "}
+          <span>F5</span>
+        </div>
         <div data-key="117" id="F6" className="key--fn">
-          <span>F6</span>{" "}
-        </div>{" "}
+          <span>F6</span>
+        </div>
         <div data-key="118" id="F7" className="key--fn">
-          <span>F7</span>{" "}
-        </div>{" "}
+          <span>F7</span>
+        </div>
         <div data-key="119" id="F8" className="key--fn">
-          <span>F8</span>{" "}
-        </div>{" "}
+          <span>F8</span>
+        </div>
         <div data-key="120" id="F9" className="key--fn">
-          <span>F9</span>{" "}
-        </div>{" "}
+          <span>F9</span>
+        </div>
         <div data-key="121" id="F10" className="key--fn">
-          <span>F10</span>{" "}
-        </div>{" "}
+          <span>F10</span>
+        </div>
         <div data-key="122" id="F11" className="key--fn">
-          <span>F11</span>{" "}
-        </div>{" "}
+          <span>F11</span>
+        </div>
         <div data-key="123" id="F12" className="key--fn">
-          <span>F12</span>{" "}
-        </div>{" "}
-      </div>{" "}
+          <span>F12</span>
+        </div>
+      </div>
       <div className="keyboard__row">
-        {" "}
+        
         <div className="key--double" id="`" data-key="192">
           <div>~</div>
-          <div>`</div>{" "}
-        </div>{" "}
+          <div>`</div>
+        </div>
         <div className="key--double" id="1" data-key="49">
           <div>!</div>
-          <div>1</div>{" "}
-        </div>{" "}
+          <div>1</div>
+        </div>
         <div className="key--double" id="2" data-key="50">
           <div>@</div>
-          <div>2</div>{" "}
-        </div>{" "}
+          <div>2</div>
+        </div>
         <div className="key--double" id="3" data-key="51">
           <div>#</div>
-          <div>3</div>{" "}
-        </div>{" "}
+          <div>3</div>
+        </div>
         <div className="key--double" id="4" data-key="52">
           <div>$</div>
-          <div>4</div>{" "}
-        </div>{" "}
+          <div>4</div>
+        </div>
         <div className="key--double" id="5" data-key="53">
           <div>%</div>
-          <div>5</div>{" "}
-        </div>{" "}
+          <div>5</div>
+        </div>
         <div className="key--double" id="6" data-key="54">
           <div>^</div>
-          <div>6</div>{" "}
-        </div>{" "}
+          <div>6</div>
+        </div>
         <div className="key--double" id="7" data-key="55">
           <div>&</div>
-          <div>7</div>{" "}
-        </div>{" "}
+          <div>7</div>
+        </div>
         <div className="key--double" id="8" data-key="56">
           <div>*</div>
-          <div>8</div>{" "}
-        </div>{" "}
+          <div>8</div>
+        </div>
         <div className="key--double" id="9" data-key="57">
           <div>(</div>
-          <div>9</div>{" "}
-        </div>{" "}
+          <div>9</div>
+        </div>
         <div className="key--double" id="0" data-key="48">
           <div>)</div>
-          <div>0</div>{" "}
-        </div>{" "}
+          <div>0</div>
+        </div>
         <div className="key--double" id="-" data-key="189">
           <div>_</div>
-          <div>-</div>{" "}
-        </div>{" "}
+          <div>-</div>
+        </div>
         <div className="key--double" id="=" data-key="187">
           <div>+</div>
-          <div>=</div>{" "}
-        </div>{" "}
+          <div>=</div>
+        </div>
         <div
           className="key--bottom-right key--word key--w4"
           id="Backspace"
@@ -258,7 +258,7 @@ const KeyboardLayout: React.FC = () => {
         </div>
       </div>
       <div className="keyboard__row keyboard__row--h3">
-        <div className="key--bottom-left key--word">
+        <div id="Function" className="key--bottom-left key--word">
           <span>fn</span>
         </div>
         <div

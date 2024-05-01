@@ -7,11 +7,14 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import KeyboardLayout from "../components/KeyboardLayout";
+import ExtendedKeyboardLayout from "../components/ExtendedKeyboardLayout";
 
 const TypeTestPage = () => {
   const [keyPressed, setKeyPressed] = useState<string[]>([]);
   const [numKeyStrokes, setNumKeyStrokes] = useState<number>(0);
   const [progressColour, setProgressColour] = useState<string>("#fff");
+  const [extendKeyboard, setExtendKeyboard] = useState<boolean>(false);
+  const [showProgress, setShowProgress] = useState<boolean>(false);
   const NUM_KEYS = 74;
 
   const getLowerCaseId = (key: string): string => {
@@ -75,7 +78,6 @@ const TypeTestPage = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // disable default key actions
       e.preventDefault();
       const key = getKey(e);
       if (!key) {
@@ -120,47 +122,71 @@ const TypeTestPage = () => {
       >
         <Container>
           <KeyboardLayout />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginTop: "50px",
-              position: "relative",
-            }}
-          >
-            <Typography
-              variant="h6"
+          {extendKeyboard && (
+            <Box sx={{ marginTop: 2, marginBottom: 14 }}>
+              <ExtendedKeyboardLayout />
+            </Box>
+          )}
+          {showProgress && (
+            <Box
               sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                color: `${progressColour}`,
-                zIndex: 1,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "50px",
+                position: "relative",
               }}
             >
-              {`${Math.round(getProgress())}%`}
-            </Typography>
-            <Box sx={{ width: "100%", position: "relative" }}>
-              <LinearProgress
-                variant="determinate"
-                value={getProgress()}
+              <Typography
+                variant="h6"
                 sx={{
-                  borderRadius: 4,
-                  border: "3px solid #e1b2b2",
-                  height: 40,
-                  backgroundColor: "transparent",
-                  "& .MuiLinearProgress-bar": {
-                    backgroundColor: "#e1b2b2",
-                  },
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  color: `${progressColour}`,
+                  zIndex: 1,
                 }}
-              />
+              >
+                {`${Math.round(getProgress())}%`}
+              </Typography>
+              <Box sx={{ width: "100%", position: "relative" }}>
+                <LinearProgress
+                  variant="determinate"
+                  value={getProgress()}
+                  sx={{
+                    borderRadius: 4,
+                    border: "3px solid #e1b2b2",
+                    height: 40,
+                    backgroundColor: "transparent",
+                    "& .MuiLinearProgress-bar": {
+                      backgroundColor: "#e1b2b2",
+                    },
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
+          )}
         </Container>
       </Box>
-      <Button onClick={handleOnResetClick}>Reset</Button>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{
+          marginTop: 3,
+          width: "20%",
+          backgroundColor: "#4A4E69",
+          alignSelf: "center",
+          borderRadius: "15px", // Adjust the border radius as needed
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.4)", // Add a shadow effect
+          "&:hover": {
+            backgroundColor: "#C9ADA7", // Change background color on hover
+          },
+        }}
+        onClick={handleOnResetClick}
+      >
+        Reset
+      </Button>
     </Box>
   );
 };
