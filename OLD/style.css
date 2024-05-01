@@ -93,7 +93,12 @@ h3 {
   justify-content: space-evenly;
 }
 
-.restart {
+.buttons_area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reset {
   background-color: #2f243a;
   font-weight: 600;
   border: 2px solid #e1b2b2;
@@ -103,12 +108,7 @@ h3 {
   font-size: 1rem;
 }
 
-.buttons_area {
-  display: flex;
-  justify-content: space-between;
-}
-
-.restart:hover {
+.reset:hover {
   background-color: #e1b2b2;
   border: 2px solid #e1b2b2;
   color: #2f243a;
@@ -324,3 +324,41 @@ h3 {
 #importFile {
   display: none;
 }
+
+.reset_area {
+  align-self: center;
+}
+
+.rad,
+.ckb {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.rad > input,
+.ckb > input {
+  /* HIDE ORG RADIO & CHECKBOX */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+/* RADIO & CHECKBOX STYLES */
+/* DEFAULT <i> STYLE */
+.rad > i,
+.ckb > i {
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transition: 0.2s;
+  box-shadow: inset 0 0 0 8px #fff;
+  border: 1px solid gray;
+  background: gray;
+}
+
+/* .keyboard_size_selector {
+  color: whitesmoke;
+} */
