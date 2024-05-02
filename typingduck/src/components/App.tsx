@@ -6,7 +6,7 @@ import HomePage from "../pages/HomePage";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/TypingDuck">
       <NavigationBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
