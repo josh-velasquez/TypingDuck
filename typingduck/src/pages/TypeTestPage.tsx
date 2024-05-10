@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import KeyboardLayout from "../components/KeyboardLayout";
 import ExtendedKeyboardLayout from "../components/ExtendedKeyboardLayout";
+import CustomButton from "../components/CustomButton";
 
 const TypeTestPage = () => {
   const [keyPressed, setKeyPressed] = useState<string[]>([]);
@@ -169,24 +170,10 @@ const TypeTestPage = () => {
           )}
         </Container>
       </Box>
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{
-          marginTop: 3,
-          width: "20%",
-          backgroundColor: "#4A4E69",
-          alignSelf: "center",
-          borderRadius: "15px", // Adjust the border radius as needed
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.4)", // Add a shadow effect
-          "&:hover": {
-            backgroundColor: "#C9ADA7", // Change background color on hover
-          },
-        }}
-        onClick={handleOnResetClick}
-      >
-        Reset
-      </Button>
+      <CustomButton
+        buttonText="Reset"
+        onCustomButtonClick={handleOnResetClick}
+      />
     </Box>
   );
 };
