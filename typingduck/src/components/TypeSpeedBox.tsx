@@ -11,15 +11,19 @@ import {
 interface TypeSpeedBoxInterface {
   text: string;
   reset: boolean;
+  enableKeyboardListener: boolean;
   onFinishedTyping: (stats: StatisticsInfo) => void;
   onResetComplete: () => void;
+  onGetNewText: () => void;
 }
 
 const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
   text,
   reset,
+  enableKeyboardListener,
   onFinishedTyping,
   onResetComplete,
+  onGetNewText,
 }) => {
   const TIME_LIMIT = 30;
   const WORD_LIMIT = 27;
@@ -70,6 +74,10 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
   };
 
   const resetType = () => {
+    if (timerInterval !== null) {
+      clearInterval(timerInterval);
+      setTimerInterval(null);
+    }
     setTextTyped("");
     setTotalTextTyped("");
     setCursorIndex(0);
@@ -77,34 +85,47 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
     setTextContainerTransform("translateY(0)");
     setTimer(TIME_LIMIT);
     setStartTime(0);
-    if (timerInterval) {
-      clearInterval(timerInterval);
-      setTimerInterval(null);
+
+    // we only try to get a new text if the user refreshes the page manually
+    // and the parent component didn't select for a custom text
+    if (!reset) {
+      // get a new text to type
+      onGetNewText();
     }
   };
 
   useEffect(() => {
+    // if we get a new text we update the rendered text
+    setRenderedText(getRenderedText(text, WORD_LIMIT));
+  }, [text]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
     if (timer > 0 && startTime > 0) {
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         setTimer(
           Math.max(TIME_LIMIT - Math.floor((Date.now() - startTime) / 1000), 0)
         );
       }, 1000);
-      setTimerInterval(interval);
     } else if (timer === 0) {
       onFinishedTyping({
         wpm: Math.round(totalTextTyped.length / 5 / 0.5),
         errors: errorsCount,
-        accuracy: Math.round(
-          ((totalTextTyped.length - errorsCount) / totalTextTyped.length) * 100
+        accuracy: Math.max(
+          Math.round(
+            ((totalTextTyped.length - errorsCount) / totalTextTyped.length) *
+              100
+          ),
+          0
         ),
       } as StatisticsInfo);
       resetType();
     }
 
     return () => {
-      if (timerInterval) {
-        clearInterval(timerInterval);
+      if (interval) {
+        clearInterval(interval);
       }
     };
   }, [timer, startTime]);
@@ -119,6 +140,12 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey && e.key === "r") {
+        e.preventDefault();
+        resetType();
+        return;
+      }
+
       if (startTime === 0) {
         setStartTime(Date.now());
       }
@@ -146,14 +173,12 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
       } else {
         // if we are 2/3 of the way then we render the next row
         const twoThirdsPos = getTwoThirdsPosition(renderedText);
+        // TODO: Make this algorithm better
         if (cursorIndex >= twoThirdsPos) {
-          // if we are then we render the next row
           const oneThirdPos = getOneThirdPosition(renderedText);
           const nextRow = getNextRow(text, renderedText, oneThirdPos);
           setRenderedText(nextRow);
-          setTotalTextTyped((prevTotalText) =>
-            prevTotalText.slice(oneThirdPos, prevTotalText.length)
-          );
+          setTotalTextTyped((prevTotalText) => prevTotalText + textTyped);
           setCursorIndex(oneThirdPos);
           setTextTyped((prevText) =>
             prevText.slice(oneThirdPos, prevText.length)
@@ -175,10 +200,14 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
         setTextTyped((prevText) => prevText + e.key);
       }
     };
+    if (enableKeyboardListener) {
+      document.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.removeEventListener("keydown", handleKeyDown);
+    }
 
-    document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [textTyped]);
+  }, [textTyped, enableKeyboardListener]);
 
   return (
     <>

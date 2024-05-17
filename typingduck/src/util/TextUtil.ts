@@ -8,8 +8,8 @@ export const getTwoThirdsPosition = (renderedText: string): number => {
 
 export const getOneThirdPosition = (renderedText: string): number => {
   const stringLength = renderedText.length;
-  const twoThirdsLength = Math.floor(stringLength * (1 / 3));
-  return twoThirdsLength;
+  const oneThirdLength = Math.floor(stringLength * (1 / 3));
+  return oneThirdLength;
 };
 
 export const getNextRow = (
@@ -45,9 +45,16 @@ export const generateRandomText = (textLength: number): string => {
     return words[randomIndex];
   };
 
+  const uniqueWords = new Set<string>();
+
   let randomText = "";
-  for (let i = 0; i < textLength; i++) {
-    randomText += getRandomWord() + " ";
+  while (uniqueWords.size < textLength) {
+    const randomWord = getRandomWord();
+    if (!uniqueWords.has(randomWord)) {
+      uniqueWords.add(randomWord);
+      randomText += randomWord + " ";
+    }
   }
+
   return randomText.trim();
 };

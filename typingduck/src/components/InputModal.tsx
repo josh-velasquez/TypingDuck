@@ -67,6 +67,7 @@ const InputModal: React.FC<InputModalInterface> = ({
           placeholder="Paste text here..."
           onChange={(event) => setInputText(event.target.value)}
           InputProps={{ style: { color: "whitesmoke" } }}
+          InputLabelProps={{ sx: { color: "white" } }}
         />
         <CustomButton
           buttonText="Done"

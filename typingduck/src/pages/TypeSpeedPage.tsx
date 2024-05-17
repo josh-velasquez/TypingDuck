@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Box, Container, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Container } from "@mui/material";
 import Statistics, { StatisticsInfo } from "../components/Statistics";
 import CustomButton from "../components/CustomButton";
 import InputModal from "../components/InputModal";
 import TypeSpeedBox from "../components/TypeSpeedBox";
 import { generateRandomText } from "../util/TextUtil";
 
-// TODO: when typing, -> render the whole word in a new line (we don't want them to be cut off)
 const TypeSpeedPage = () => {
-  const SAMPLE_TEXT_LIMIT = 500;
+  const SAMPLE_TEXT_LIMIT = 300;
   const [text, setText] = useState<string>(
     generateRandomText(SAMPLE_TEXT_LIMIT)
   );
   const [resetTypingSpeed, setResetTypingSpeed] = useState<boolean>(false);
   const [showStats, setShowStats] = useState<boolean>(false);
   const [openInputModal, setOpenInputModal] = useState<boolean>(false);
+  const [enableKeyboardListener, setEnableKeyboardListener] =
+    useState<boolean>(true);
   const [statsInfo, setStatsInfo] = useState<StatisticsInfo>({
     wpm: 0,
     errors: 0,
@@ -23,8 +24,8 @@ const TypeSpeedPage = () => {
 
   const handleCustomTextClick = () => {
     setOpenInputModal(true);
-    reset();
-    // TODO: disable keyboard listener
+    setResetTypingSpeed(true);
+    setEnableKeyboardListener(false);
   };
 
   const handleCustomTextInput = (newText: string) => {
@@ -36,6 +37,7 @@ const TypeSpeedPage = () => {
 
   const handleOnCloseModalClick = () => {
     setOpenInputModal(false);
+    setEnableKeyboardListener(true);
   };
 
   const handlOnResetClick = () => {
@@ -67,8 +69,12 @@ const TypeSpeedPage = () => {
                 text={text}
                 onFinishedTyping={onFinished}
                 reset={resetTypingSpeed}
+                enableKeyboardListener={enableKeyboardListener}
                 onResetComplete={() => {
                   setResetTypingSpeed(false);
+                }}
+                onGetNewText={() => {
+                  setText(generateRandomText(SAMPLE_TEXT_LIMIT));
                 }}
               />
             )}
@@ -79,11 +85,11 @@ const TypeSpeedPage = () => {
                 justifyContent: "space-between",
               }}
             >
-              <CustomButton
+              {/* <CustomButton
                 buttonText="Reset"
                 onCustomButtonClick={handlOnResetClick}
                 disableKeyInvoke
-              />
+              /> */}
               <CustomButton
                 buttonText="Custom Text"
                 onCustomButtonClick={handleCustomTextClick}

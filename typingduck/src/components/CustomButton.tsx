@@ -19,7 +19,7 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
       variant="contained"
       color="primary"
       sx={{
-        marginTop: 3,
+        marginTop: 5,
         width: "20%",
         backgroundColor: "#4A4E69",
         alignSelf: "center",
