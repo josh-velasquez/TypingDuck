@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Box, Container } from "@mui/material";
-import Statistics, { StatisticsInfo } from "../components/Statistics";
+import Statistics, { StatsInfo } from "../components/Statistics";
 import CustomButton from "../components/CustomButton";
 import InputModal from "../components/InputModal";
-import TypeSpeedBox from "../components/TypeSpeedBox";
 import { generateRandomText } from "../util/TextUtil";
+import TypeSpeedScroll from "../components/TypeSpeedScroll";
+import { ImportExport } from "@mui/icons-material";
 
 const TypeSpeedPage = () => {
   const SAMPLE_TEXT_LIMIT = 300;
@@ -16,10 +17,20 @@ const TypeSpeedPage = () => {
   const [openInputModal, setOpenInputModal] = useState<boolean>(false);
   const [enableKeyboardListener, setEnableKeyboardListener] =
     useState<boolean>(true);
-  const [statsInfo, setStatsInfo] = useState<StatisticsInfo>({
-    wpm: 0,
-    errors: 0,
-    accuracy: 0,
+  const [statsInfo, setStatsInfo] = useState<StatsInfo>({
+    wordStats: {
+      wpm: 0,
+      cpm: 0,
+      keystrokes: 0,
+    },
+    accuracyStats: {
+      accuracy: 0,
+    },
+    errorStats: {
+      errors: 0,
+      correctedErrors: 0,
+      errorRate: 0,
+    },
   });
 
   const handleCustomTextClick = () => {
@@ -49,7 +60,7 @@ const TypeSpeedPage = () => {
     setResetTypingSpeed(true);
   };
 
-  const onFinished = (stats: StatisticsInfo) => {
+  const onFinished = (stats: StatsInfo) => {
     setShowStats(true);
     setStatsInfo(stats);
   };
@@ -65,7 +76,7 @@ const TypeSpeedPage = () => {
         {!showStats ? (
           <Container>
             {text && (
-              <TypeSpeedBox
+              <TypeSpeedScroll
                 text={text}
                 onFinishedTyping={onFinished}
                 reset={resetTypingSpeed}
@@ -83,6 +94,7 @@ const TypeSpeedPage = () => {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
+                // marginTop: "100px",
               }}
             >
               {/* <CustomButton
@@ -93,6 +105,7 @@ const TypeSpeedPage = () => {
               <CustomButton
                 buttonText="Custom Text"
                 onCustomButtonClick={handleCustomTextClick}
+                icon={<ImportExport />}
                 disableKeyInvoke
               />
             </Box>

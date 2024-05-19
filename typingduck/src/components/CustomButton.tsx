@@ -1,15 +1,18 @@
 import { Button } from "@mui/material";
+import { ReactNode } from "react";
 
 interface CustomButtonInterface {
   buttonText: string;
   onCustomButtonClick: () => void;
   disableKeyInvoke?: boolean;
+  icon?: ReactNode;
 }
 
 const CustomButton: React.FC<CustomButtonInterface> = ({
   buttonText,
   onCustomButtonClick,
   disableKeyInvoke,
+  icon,
 }) => {
   const handleOnButtonClick = () => {
     onCustomButtonClick();
@@ -20,7 +23,6 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
       color="primary"
       sx={{
         marginTop: 5,
-        width: "20%",
         backgroundColor: "#4A4E69",
         alignSelf: "center",
         borderRadius: "15px",
@@ -36,6 +38,7 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
         }
       }}
     >
+      {icon && <span style={{ marginRight: "5px" }}>{icon}</span>}
       {buttonText}
     </Button>
   );

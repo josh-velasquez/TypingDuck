@@ -1,23 +1,18 @@
 import { Box, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { StatisticsInfo } from "./Statistics";
-import {
-  getNextRow,
-  getOneThirdPosition,
-  getRenderedText,
-  getTwoThirdsPosition,
-} from "../util/TextUtil";
+import { StatsInfo } from "./Statistics";
+import { useEffect, useRef, useState } from "react";
+import { getNumWords } from "../util/TextUtil";
 
-interface TypeSpeedBoxInterface {
+interface TypeSpeedScrollInterface {
   text: string;
   reset: boolean;
   enableKeyboardListener: boolean;
-  onFinishedTyping: (stats: StatisticsInfo) => void;
+  onFinishedTyping: (stats: StatsInfo) => void;
   onResetComplete: () => void;
   onGetNewText: () => void;
 }
 
-const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
+const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
   text,
   reset,
   enableKeyboardListener,
@@ -26,27 +21,44 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
   onGetNewText,
 }) => {
   const TIME_LIMIT = 30;
-  const WORD_LIMIT = 27;
-
+  //   const TIME_LIMIT = 1;
+  const SCROLL_RANGE = 25;
+  const VIEWED_WORD_SCROLL_LIMIT = 15;
   const [startTime, setStartTime] = useState<number>(0);
   const [timer, setTimer] = useState<number>(TIME_LIMIT);
-
-  const [totalTextTyped, setTotalTextTyped] = useState<string>("");
-  const [renderedText, setRenderedText] = useState<string>(
-    getRenderedText(text, WORD_LIMIT)
-  );
-
   const [textTyped, setTextTyped] = useState<string>("");
+  const [keystrokes, setKeyStrokes] = useState<string>("");
   const [cursorIndex, setCursorIndex] = useState<number>(0);
   const [errorsCount, setErrorsCount] = useState<number>(0);
+  const [correctedErrorsCounter, setCorrectedErrorsCounter] =
+    useState<number>(0);
   const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(
     null
   );
-  const [textContainerTransform, setTextContainerTransform] =
-    useState("translateY(0)");
+  const [renderedText, setRenderedText] = useState<string>(text);
+  const textContainerRef = useRef<HTMLDivElement>(null);
+  const [wordCounter, setWordCounter] = useState<string>("");
+
+  const resetType = () => {
+    if (timerInterval !== null) {
+      clearInterval(timerInterval);
+      setTimerInterval(null);
+    }
+    setTextTyped("");
+    setCursorIndex(0);
+    setErrorsCount(0);
+    setTimer(TIME_LIMIT);
+    setStartTime(0);
+
+    // we only try to get a new text if the user refreshes the page manually
+    // and the parent component didn't select for a custom text
+    if (!reset) {
+      onGetNewText();
+    }
+  };
 
   const renderTextWithCursor = () => {
-    const textBeforeCursor = renderedText.substring(0, cursorIndex);
+    const textBeforeCursor = text.substring(0, cursorIndex);
     const textAfterCursor = renderedText.substring(cursorIndex);
     // TODO: insert characters that user input even when its wrong.. make sure to delete it when they press backspace
     return (
@@ -73,30 +85,9 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
     );
   };
 
-  const resetType = () => {
-    if (timerInterval !== null) {
-      clearInterval(timerInterval);
-      setTimerInterval(null);
-    }
-    setTextTyped("");
-    setTotalTextTyped("");
-    setCursorIndex(0);
-    setErrorsCount(0);
-    setTextContainerTransform("translateY(0)");
-    setTimer(TIME_LIMIT);
-    setStartTime(0);
-
-    // we only try to get a new text if the user refreshes the page manually
-    // and the parent component didn't select for a custom text
-    if (!reset) {
-      // get a new text to type
-      onGetNewText();
-    }
-  };
-
   useEffect(() => {
     // if we get a new text we update the rendered text
-    setRenderedText(getRenderedText(text, WORD_LIMIT));
+    setRenderedText(text);
   }, [text]);
 
   useEffect(() => {
@@ -110,16 +101,25 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
       }, 1000);
     } else if (timer === 0) {
       onFinishedTyping({
-        wpm: Math.round(totalTextTyped.length / 5 / 0.5),
-        errors: errorsCount,
-        accuracy: Math.max(
-          Math.round(
-            ((totalTextTyped.length - errorsCount) / totalTextTyped.length) *
-              100
-          ),
-          0
-        ),
-      } as StatisticsInfo);
+        wordStats: {
+          wpm: Math.round(textTyped.length / 5 / 0.5),
+          cpm: Math.round((textTyped.length / 0.5) * 60),
+          keystrokes: keystrokes.length,
+        },
+        accuracyStats: {
+          accuracy:
+            textTyped.length >= 1
+              ? Math.round(
+                  ((textTyped.length - errorsCount) / textTyped.length) * 100
+                )
+              : 0,
+        },
+        errorStats: {
+          errors: errorsCount,
+          correctedErrors: correctedErrorsCounter,
+          errorRate: Math.round((errorsCount / textTyped.length) * 100),
+        },
+      } as StatsInfo);
       resetType();
     }
 
@@ -155,6 +155,20 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
         return;
       }
 
+      // scroll the view when we reach the viewed words limit
+      if (
+        e.key === " " &&
+        getNumWords(wordCounter) >= VIEWED_WORD_SCROLL_LIMIT &&
+        textContainerRef.current
+      ) {
+        textContainerRef.current.scrollTop += SCROLL_RANGE;
+        setWordCounter("");
+      }
+
+      // increment the keys pressed
+      setKeyStrokes((prevKeyStrokes) => prevKeyStrokes + e.key);
+
+      // if the user is pressing backspace we remove the last text typed and set the cursor back
       if (e.key === "Backspace" && cursorIndex >= 0) {
         if (cursorIndex === 0) {
           return;
@@ -165,27 +179,13 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
           const expectedChar = renderedText[cursorIndex - 1].toLowerCase();
           if (lastChar.toLowerCase() !== expectedChar) {
             setErrorsCount((prevErrors) => prevErrors - 1);
+            setCorrectedErrorsCounter((prevErrors) => prevErrors + 1);
           }
         }
 
         setCursorIndex((prevIndex) => prevIndex - 1);
         setTextTyped((prevText) => prevText.slice(0, -1));
       } else {
-        // if we are 2/3 of the way then we render the next row
-        const twoThirdsPos = getTwoThirdsPosition(renderedText);
-        // TODO: Make this algorithm better
-        if (cursorIndex >= twoThirdsPos) {
-          const oneThirdPos = getOneThirdPosition(renderedText);
-          const nextRow = getNextRow(text, renderedText, oneThirdPos);
-          setRenderedText(nextRow);
-          setTotalTextTyped((prevTotalText) => prevTotalText + textTyped);
-          setCursorIndex(oneThirdPos);
-          setTextTyped((prevText) =>
-            prevText.slice(oneThirdPos, prevText.length)
-          );
-          return;
-        }
-
         const typedChar = e.key.toLowerCase();
         if (typedChar !== " ") {
           const expectedChar = renderedText[cursorIndex].toLowerCase();
@@ -198,6 +198,7 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
           prevIndex < renderedText.length ? prevIndex + 1 : prevIndex
         );
         setTextTyped((prevText) => prevText + e.key);
+        setWordCounter((prevText) => prevText + e.key);
       }
     };
     if (enableKeyboardListener) {
@@ -218,11 +219,13 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
       </Box>
       <Box
         sx={{
-          padding: "40px",
+          marginTop: "40px",
           textAlign: "center",
+          height: "85px",
           transition: "transform 0.5s ease-in-out",
-          transform: textContainerTransform,
+          overflow: "auto",
         }}
+        ref={textContainerRef}
       >
         {renderTextWithCursor()}
       </Box>
@@ -230,4 +233,4 @@ const TypeSpeedBox: React.FC<TypeSpeedBoxInterface> = ({
   );
 };
 
-export default TypeSpeedBox;
+export default TypeSpeedScroll;
