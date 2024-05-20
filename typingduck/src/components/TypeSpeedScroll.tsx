@@ -262,6 +262,10 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
           height: "85px",
           transition: "transform 0.5s ease-in-out",
           overflow: "auto",
+          scrollbarWidth: "none",  // For Firefox
+          "&::-webkit-scrollbar": {
+            display: "none",  // For Chrome, Safari, and Opera
+          },
         }}
         ref={textContainerRef}
       >
