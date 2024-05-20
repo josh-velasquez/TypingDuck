@@ -8,6 +8,7 @@ export interface StatsInfo {
 }
 interface AccuracyStatsInfo {
   accuracy: number;
+  time: number;
 }
 interface ErrorStatsInfo {
   errors: number;
@@ -19,6 +20,7 @@ interface WordStatsInfo {
   wpm: number;
   cpm: number;
   keystrokes: number;
+  totalWordsTyped: number;
 }
 
 interface Statistic {
@@ -68,6 +70,10 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
               <span>Keystrokes:</span>
               <span>{stats.keystrokes}</span>
             </Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <span>Total Words Typed:</span>
+              <span>{stats.totalWordsTyped}</span>
+            </Box>
           </Typography>
         </>
       ),
@@ -103,6 +109,10 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <span>Accuracy (%):</span>
               <span>{stats.accuracy}</span>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <span>Time (seconds):</span>
+              <span>{stats.time}</span>
             </Box>
           </Typography>
         </>

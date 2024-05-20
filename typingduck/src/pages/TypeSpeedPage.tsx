@@ -5,7 +5,7 @@ import CustomButton from "../components/CustomButton";
 import InputModal from "../components/InputModal";
 import { generateRandomText } from "../util/TextUtil";
 import TypeSpeedScroll from "../components/TypeSpeedScroll";
-import { ImportExport } from "@mui/icons-material";
+import { ImportExport, RestartAlt } from "@mui/icons-material";
 
 const TypeSpeedPage = () => {
   const SAMPLE_TEXT_LIMIT = 300;
@@ -22,9 +22,11 @@ const TypeSpeedPage = () => {
       wpm: 0,
       cpm: 0,
       keystrokes: 0,
+      totalWordsTyped: 0,
     },
     accuracyStats: {
       accuracy: 0,
+      time: 0,
     },
     errorStats: {
       errors: 0,
@@ -94,7 +96,7 @@ const TypeSpeedPage = () => {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                // marginTop: "100px",
+                marginTop: "100px",
               }}
             >
               {/* <CustomButton
@@ -116,6 +118,7 @@ const TypeSpeedPage = () => {
             <CustomButton
               buttonText="Reset"
               onCustomButtonClick={handlOnResetClick}
+              icon={<RestartAlt />}
             />
           </Container>
         )}
