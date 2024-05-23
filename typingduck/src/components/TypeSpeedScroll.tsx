@@ -22,8 +22,7 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
 }) => {
   const TIME_LIMIT = 30;
   // const TIME_LIMIT = 1;
-  const SCROLL_RANGE = 25;
-  const VIEWED_WORD_SCROLL_LIMIT = 15;
+  const SCROLL_RANGE = 35;
 
   const [startTime, setStartTime] = useState<number>(0);
   const [timer, setTimer] = useState<number>(TIME_LIMIT);
@@ -40,8 +39,9 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     useState<number>(0);
 
   const textContainerRef = useRef<HTMLDivElement>(null);
-  const wordCounterRef = useRef<string>("");
+
   const keystrokesRef = useRef<string>("");
+  const cursorRef = useRef<HTMLSpanElement>(null);
 
   const resetType = useCallback(() => {
     if (timerInterval !== null) {
@@ -53,7 +53,6 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     setErrorsCount(0);
     setTimer(TIME_LIMIT);
     setStartTime(0);
-    wordCounterRef.current = "";
     keystrokesRef.current = "";
 
     // we only try to get a new text if the user refreshes the page manually
@@ -85,7 +84,9 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
             {char}
           </span>
         ))}
-        <span style={{ color: "#e1b2b2" }}>|</span>
+        <span ref={cursorRef} style={{ color: "#e1b2b2" }}>
+          |
+        </span>
         {textAfterCursor}
       </Typography>
     );
@@ -181,16 +182,7 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
       // if we've reached the end of the generated text
       if (textTyped.length === renderedText.length - 1) {
         finishTyping(TIME_LIMIT - timer);
-      }
-
-      // scroll the view when we reach the viewed words limit
-      if (
-        e.key === " " &&
-        getNumWords(wordCounterRef.current) >= VIEWED_WORD_SCROLL_LIMIT &&
-        textContainerRef.current
-      ) {
-        textContainerRef.current.scrollTop += SCROLL_RANGE;
-        wordCounterRef.current = "";
+        return;
       }
 
       // increment the keys pressed
@@ -226,7 +218,19 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
           prevIndex < renderedText.length ? prevIndex + 1 : prevIndex
         );
         setTextTyped((prevText) => prevText + e.key);
-        wordCounterRef.current += e.key;
+      }
+
+      // TODO: refine this scrolling
+      // Check if the cursor is outside the visible area and scroll if necessary
+      if (cursorRef.current && textContainerRef.current) {
+        const cursorRect = cursorRef.current.getBoundingClientRect();
+        const containerRect = textContainerRef.current.getBoundingClientRect();
+
+        if (cursorRect.bottom > containerRect.bottom) {
+          textContainerRef.current.scrollTop += SCROLL_RANGE;
+        } else if (cursorRect.top < containerRect.top) {
+          textContainerRef.current.scrollTop -= SCROLL_RANGE;
+        }
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -262,9 +266,9 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
           height: "85px",
           transition: "transform 0.5s ease-in-out",
           overflow: "auto",
-          scrollbarWidth: "none",  // For Firefox
+          scrollbarWidth: "none", // For Firefox
           "&::-webkit-scrollbar": {
-            display: "none",  // For Chrome, Safari, and Opera
+            display: "none", // For Chrome, Safari, and Opera
           },
         }}
         ref={textContainerRef}
