@@ -56,10 +56,11 @@ const InputModal: React.FC<InputModalInterface> = ({
             marginTop: 3,
             height: 175,
             overflowY: "auto",
+            textTransform: "lowercase",
           }}
           size="medium"
           fullWidth
-          label="Custom Text"
+          label="custom text"
           variant="outlined"
           color="primary"
           multiline

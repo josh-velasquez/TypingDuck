@@ -33,7 +33,7 @@ const NavigationBar = () => {
                   location.pathname === "/typing-speed" ? "#e1b2b2" : "inherit",
               }}
             >
-              Typing Speed
+              typing speed
             </Link>
           </Typography>
           <Typography variant="h6" component="div">
@@ -45,7 +45,7 @@ const NavigationBar = () => {
                   location.pathname === "/typing-test" ? "#e1b2b2" : "inherit",
               }}
             >
-              Typing Test
+              typing test
             </Link>
           </Typography>
         </Box>

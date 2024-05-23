@@ -53,25 +53,25 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
 
   const statisticsData: Statistic[] = [
     {
-      label: "Word",
+      label: "word",
       value: statsInfo.wordStats,
       render: (stats: WordStatsInfo) => (
         <>
           <Typography variant="subtitle1">
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>WPM:</span>
+              <span>wpm:</span>
               <span>{stats.wpm}</span>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>CPM:</span>
+              <span>cpm:</span>
               <span>{stats.cpm}</span>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>Keystrokes:</span>
+              <span>keystrokes:</span>
               <span>{stats.keystrokes}</span>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>Total Words Typed:</span>
+              <span>total words typed:</span>
               <span>{stats.totalWordsTyped}</span>
             </Box>
           </Typography>
@@ -79,21 +79,21 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
       ),
     },
     {
-      label: "Error",
+      label: "error",
       value: statsInfo.errorStats,
       render: (stats: ErrorStatsInfo) => (
         <>
           <Typography variant="subtitle1">
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>Errors:</span>
+              <span>errors:</span>
               <span>{stats.errors}</span>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>Corrected Errors:</span>
+              <span>corrected errors:</span>
               <span>{stats.correctedErrors}</span>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>Error Rate (%):</span>
+              <span>error rate (%):</span>
               <span>{stats.errorRate}</span>
             </Box>
           </Typography>
@@ -101,17 +101,17 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
       ),
     },
     {
-      label: "Accuracy",
+      label: "accuracy",
       value: statsInfo.accuracyStats,
       render: (stats: AccuracyStatsInfo) => (
         <>
           <Typography variant="subtitle1">
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>Accuracy (%):</span>
+              <span>accuracy (%):</span>
               <span>{stats.accuracy}</span>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>Time (seconds):</span>
+              <span>time (seconds):</span>
               <span>{stats.time}</span>
             </Box>
           </Typography>
@@ -154,7 +154,7 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
                 "opacity 0.5s ease-in-out, transform 0.4s ease-in-out",
               boxShadow: "5px 100px 200px rgba(0, 0, 0, 0.5)",
               "&:hover": {
-                transform: "translateY(-20px)",
+                transform: "translateY(-40px)",
               },
             }}
           >

@@ -105,7 +105,7 @@ const TypeSpeedPage = () => {
                 disableKeyInvoke
               /> */}
               <CustomButton
-                buttonText="Custom Text"
+                buttonText="custom text"
                 onCustomButtonClick={handleCustomTextClick}
                 icon={<ImportExport />}
                 disableKeyInvoke

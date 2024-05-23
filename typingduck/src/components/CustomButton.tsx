@@ -27,6 +27,7 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
         alignSelf: "center",
         borderRadius: "15px",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.4)",
+        textTransform: "lowercase",
         "&:hover": {
           backgroundColor: "#C9ADA7",
         },

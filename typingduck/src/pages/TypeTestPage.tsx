@@ -151,7 +151,7 @@ const TypeTestPage = () => {
           >
             <Fade in={showKey} timeout={{ enter: 200, exit: 500 }}>
               <Typography variant="h4" color={"#e1b2b2"}>
-                {keyVisible === "" ? "Type to start..." : keyVisible}
+                {keyVisible === "" ? "type to start..." : keyVisible}
               </Typography>
             </Fade>
           </Box>
