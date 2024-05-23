@@ -1,27 +1,6 @@
-import { Key } from "@mui/icons-material";
-import React, { useEffect } from "react";
+import React from "react";
 
-interface KeyboardLayoutInterface {
-  animateWord?: string;
-}
-
-const KeyboardLayout: React.FC<KeyboardLayoutInterface> = ({ animateWord }) => {
-  useEffect(() => {
-    if (animateWord) {
-      animateWord.split("").forEach((letter, index) => {
-        const key = document.querySelector(
-          `[data-char="${letter.toUpperCase()}"]`
-        );
-        if (key) {
-          setTimeout(() => {
-            key.setAttribute("data-pressed", "on");
-            setTimeout(() => key.removeAttribute("data-pressed"), 200);
-          }, 150 * index);
-        }
-      });
-    }
-  }, [animateWord]);
-
+const KeyboardLayout: React.FC = () => {
   return (
     <div className="keyboard">
       <div className="keyboard__row keyboard__row--h1">

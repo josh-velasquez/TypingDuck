@@ -95,10 +95,10 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     );
   };
 
-  const finishTyping = (leftOverTime?: number) => {
+  const finishTyping = () => {
     const averageWordLength = 5;
     const oneMinuteToSeconds = 60;
-    const timeElapsed = TIME_LIMIT - (leftOverTime ?? timer);
+    const timeElapsed = TIME_LIMIT - timer;
     const wpm = Math.round(
       textTyped.length / averageWordLength / (timeElapsed / oneMinuteToSeconds)
     );
@@ -185,7 +185,7 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
 
       // if we've reached the end of the generated text
       if (textTyped.length === renderedText.length - 1) {
-        finishTyping(TIME_LIMIT - timer);
+        finishTyping();
         return;
       }
 
