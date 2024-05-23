@@ -22,7 +22,6 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
 }) => {
   const TIME_LIMIT = 30;
   // const TIME_LIMIT = 1;
-  const SCROLL_RANGE = 35;
 
   const [startTime, setStartTime] = useState<number>(0);
   const [timer, setTimer] = useState<number>(TIME_LIMIT);
@@ -39,7 +38,6 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     useState<number>(0);
 
   const textContainerRef = useRef<HTMLDivElement>(null);
-
   const keystrokesRef = useRef<string>("");
   const cursorRef = useRef<HTMLSpanElement>(null);
 
@@ -61,7 +59,6 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
       onGetNewText();
     }
   }, [onGetNewText]);
-
 
   // For debugging
   // useEffect(() => {
@@ -227,15 +224,14 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
       }
 
       // TODO: refine this scrolling
+      const SCROLL_RANGE = 31;
+      const SCROLL_OFFSET = 12;
       // Check if the cursor is outside the visible area and scroll if necessary
       if (cursorRef.current && textContainerRef.current) {
         const cursorRect = cursorRef.current.getBoundingClientRect();
         const containerRect = textContainerRef.current.getBoundingClientRect();
-
-        if (cursorRect.bottom > containerRect.bottom) {
+        if (cursorRect.bottom > containerRect.bottom - SCROLL_OFFSET) {
           textContainerRef.current.scrollTop += SCROLL_RANGE;
-        } else if (cursorRect.top < containerRect.top) {
-          textContainerRef.current.scrollTop -= SCROLL_RANGE;
         }
       }
     },
@@ -269,7 +265,9 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
         sx={{
           marginTop: "40px",
           textAlign: "center",
-          height: "100px",
+          height: "95px",
+          maxWidth: "1400px",
+          // backgroundColor: "red",
           transition: "transform 0.5s ease-in-out",
           overflow: "auto",
           scrollbarWidth: "none", // For Firefox
