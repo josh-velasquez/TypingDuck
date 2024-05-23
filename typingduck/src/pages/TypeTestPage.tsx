@@ -2,10 +2,11 @@ import {
   Box,
   Button,
   Container,
+  Fade,
   LinearProgress,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import KeyboardLayout from "../components/KeyboardLayout";
 import ExtendedKeyboardLayout from "../components/ExtendedKeyboardLayout";
 import CustomButton from "../components/CustomButton";
@@ -16,6 +17,8 @@ const TypeTestPage = () => {
   const [progressColour, setProgressColour] = useState<string>("#fff");
   const [extendKeyboard, setExtendKeyboard] = useState<boolean>(false);
   const [showProgress, setShowProgress] = useState<boolean>(false);
+  const [showKey, setShowKey] = useState<boolean>(true);
+  const [keyVisible, setKeyVisible] = useState<string>("");
   const NUM_KEYS = 74;
 
   const getLowerCaseId = (key: string): string => {
@@ -77,8 +80,8 @@ const TypeTestPage = () => {
     return (numKeyStrokes / NUM_KEYS) * 100;
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
       e.preventDefault();
       const key = getKey(e);
       if (!key) {
@@ -90,20 +93,28 @@ const TypeTestPage = () => {
 
       if (!keyPressed.includes(e.key)) {
         setNumKeyStrokes((prev) => prev + 1);
-        setKeyPressed((prev) => [...prev, e.key]);
+        const actualKey = e.key === " " ? "Space" : e.key;
+        setKeyPressed((prev) => [...prev, actualKey]);
+        setKeyVisible(actualKey);
         let newKey = getLowerCaseId(e.key);
         handleKeyHighlight(newKey, true);
         if (numKeyStrokes >= Math.round(NUM_KEYS / 2)) {
           setProgressColour("#000");
         }
       }
-    };
+    },
+    [keyPressed]
+  );
 
-    const handleKeyUp = (e: KeyboardEvent) => {
+  const handleKeyUp = useCallback(
+    (e: KeyboardEvent) => {
       const key = getKey(e);
       key && key.removeAttribute("data-pressed");
-    };
+    },
+    [keyPressed]
+  );
 
+  useEffect(() => {
     document.body.addEventListener("keydown", handleKeyDown);
     document.body.addEventListener("keyup", handleKeyUp);
 
@@ -111,7 +122,18 @@ const TypeTestPage = () => {
       document.body.removeEventListener("keydown", handleKeyDown);
       document.body.removeEventListener("keyup", handleKeyUp);
     };
-  }, [keyPressed]);
+  }, []);
+
+  useEffect(() => {
+    if (keyVisible) {
+      setShowKey(true);
+      const fadeTimeout = setTimeout(() => {
+        setShowKey(false);
+      }, 1000);
+
+      return () => clearTimeout(fadeTimeout);
+    }
+  }, [keyVisible]);
 
   return (
     <Box display={"flex"} flexDirection={"column"}>
@@ -122,6 +144,18 @@ const TypeTestPage = () => {
         height="70vh"
       >
         <Container>
+          <Box
+            sx={{ marginBottom: "30px" }}
+            display="flex"
+            justifyContent={"center"}
+            alignItems="center"
+          >
+            <Fade in={showKey} timeout={{ enter: 200, exit: 500 }}>
+              <Typography variant="h4" color={"#e1b2b2"}>
+                {keyVisible === "" ? "Type to start..." : keyVisible}
+              </Typography>
+            </Fade>
+          </Box>
           <KeyboardLayout />
           {extendKeyboard && (
             <Box sx={{ marginTop: 2, marginBottom: 14 }}>

@@ -62,6 +62,12 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     }
   }, [onGetNewText]);
 
+
+  // For debugging
+  // useEffect(() => {
+  //   (window as any).textContainerRef = textContainerRef;
+  // }, [])
+
   const renderTextWithCursor = () => {
     const textBeforeCursor = renderedText.substring(0, cursorIndex);
     const textAfterCursor = renderedText.substring(cursorIndex);
@@ -102,13 +108,14 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     const cpm = Math.round(
       (textTyped.length / timeElapsed) * oneMinuteToSeconds
     );
-    const accuracy =
-      textTyped.length >= 1
-        ? Math.round(
-            ((textTyped.length - errorsCount) / textTyped.length) * 100
-          )
-        : 0;
-    const errorRate = Math.round((errorsCount / textTyped.length) * 100);
+    let accuracy = 0;
+    let errorRate = 0;
+    if (textTyped.length >= 1) {
+      accuracy = Math.round(
+        ((textTyped.length - errorsCount) / textTyped.length) * 100
+      );
+      errorRate = Math.round((errorsCount / textTyped.length) * 100);
+    }
     onFinishedTyping({
       wordStats: {
         wpm,
@@ -185,9 +192,6 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
         return;
       }
 
-      // increment the keys pressed
-      keystrokesRef.current += e.key;
-
       // if the user is pressing backspace we remove the last text typed and set the cursor back
       if (e.key === "Backspace" && cursorIndex >= 0) {
         if (cursorIndex === 0) {
@@ -218,6 +222,8 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
           prevIndex < renderedText.length ? prevIndex + 1 : prevIndex
         );
         setTextTyped((prevText) => prevText + e.key);
+        // increment the keys pressed
+        keystrokesRef.current += e.key;
       }
 
       // TODO: refine this scrolling
@@ -263,7 +269,7 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
         sx={{
           marginTop: "40px",
           textAlign: "center",
-          height: "85px",
+          height: "100px",
           transition: "transform 0.5s ease-in-out",
           overflow: "auto",
           scrollbarWidth: "none", // For Firefox
