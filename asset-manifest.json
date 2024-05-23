@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/TypingDuck/static/css/main.af9c4366.css",
-    "main.js": "/TypingDuck/static/js/main.d39542ec.js",
+    "main.js": "/TypingDuck/static/js/main.0c4f92f4.js",
     "static/media/new-duck.png": "/TypingDuck/static/media/new-duck.60b4dca5a28b20b80a85.png",
     "index.html": "/TypingDuck/index.html",
     "main.af9c4366.css.map": "/TypingDuck/static/css/main.af9c4366.css.map",
-    "main.d39542ec.js.map": "/TypingDuck/static/js/main.d39542ec.js.map"
+    "main.0c4f92f4.js.map": "/TypingDuck/static/js/main.0c4f92f4.js.map"
   },
   "entrypoints": [
     "static/css/main.af9c4366.css",
-    "static/js/main.d39542ec.js"
+    "static/js/main.0c4f92f4.js"
   ]
 }
