@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import KeyboardLayout from "../components/KeyboardLayout";
 import ExtendedKeyboardLayout from "../components/ExtendedKeyboardLayout";
 import CustomButton from "../components/CustomButton";
+import { splitWords } from "../util/TextUtil";
 
 const TypeTestPage = () => {
   const [keyPressed, setKeyPressed] = useState<string[]>([]);
@@ -92,9 +93,10 @@ const TypeTestPage = () => {
 
       if (!keyPressed.includes(e.key)) {
         setNumKeyStrokes((prev) => prev + 1);
-        const actualKey = e.key === " " ? "Space" : e.key;
-        setKeyPressed((prev) => [...prev, actualKey]);
-        setKeyVisible(actualKey);
+        const convertSpaceKey = e.key === " " ? "Space" : e.key;
+        setKeyPressed((prev) => [...prev, convertSpaceKey]);
+        const keyText = splitWords(convertSpaceKey);
+        setKeyVisible(keyText);
         let newKey = getLowerCaseId(e.key);
         handleKeyHighlight(newKey, true);
         if (numKeyStrokes >= Math.round(NUM_KEYS / 2)) {
