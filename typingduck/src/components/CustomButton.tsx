@@ -39,7 +39,9 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
         }
       }}
     >
-      {icon && <span style={{ marginRight: "5px" }}>{icon}</span>}
+      {icon && (
+        <span style={{ display: "flex", marginRight: "5px" }}>{icon}</span>
+      )}
       {buttonText}
     </Button>
   );

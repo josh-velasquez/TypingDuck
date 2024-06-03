@@ -10,6 +10,7 @@ import KeyboardLayout from "../components/KeyboardLayout";
 import ExtendedKeyboardLayout from "../components/ExtendedKeyboardLayout";
 import CustomButton from "../components/CustomButton";
 import { splitWords } from "../util/TextUtil";
+import { RestartAlt } from "@mui/icons-material";
 
 const TypeTestPage = () => {
   const [keyPressed, setKeyPressed] = useState<string[]>([]);
@@ -208,6 +209,7 @@ const TypeTestPage = () => {
       <CustomButton
         buttonText="Reset"
         onCustomButtonClick={handleOnResetClick}
+        icon={<RestartAlt />}
       />
     </Box>
   );

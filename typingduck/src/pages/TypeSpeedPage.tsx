@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Statistics, { StatsInfo } from "../components/Statistics";
 import CustomButton from "../components/CustomButton";
 import InputModal from "../components/InputModal";
@@ -94,16 +94,22 @@ const TypeSpeedPage = () => {
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: "100px",
+                justifyContent: "center",
+                marginTop: "90px",
               }}
             >
-              {/* <CustomButton
-                buttonText="Reset"
-                onCustomButtonClick={handlOnResetClick}
-                disableKeyInvoke
-              /> */}
+              <Typography style={{ color: "#cccccc80" }}>
+                cmd + r to reset
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: "10px",
+              }}
+            >
               <CustomButton
                 buttonText="custom text"
                 onCustomButtonClick={handleCustomTextClick}
@@ -125,7 +131,7 @@ const TypeSpeedPage = () => {
       </Box>
       <InputModal
         open={openInputModal}
-        title="Paste custom text"
+        title="paste custom text"
         onClose={handleOnCloseModalClick}
         onInputChange={handleCustomTextInput}
       />

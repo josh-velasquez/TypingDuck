@@ -1,6 +1,7 @@
 import { Box, Divider, Modal, TextField, Typography } from "@mui/material";
 import CustomButton from "./CustomButton";
 import { useState } from "react";
+import { DoneRounded } from "@mui/icons-material";
 
 interface InputModalInterface {
   open: boolean;
@@ -60,12 +61,11 @@ const InputModal: React.FC<InputModalInterface> = ({
           }}
           size="medium"
           fullWidth
-          label="custom text"
           variant="outlined"
           color="primary"
           multiline
           value={inputText}
-          placeholder="Paste text here..."
+          placeholder="paste text here..."
           onChange={(event) => setInputText(event.target.value)}
           InputProps={{ style: { color: "whitesmoke" } }}
           InputLabelProps={{ sx: { color: "white" } }}
@@ -73,6 +73,7 @@ const InputModal: React.FC<InputModalInterface> = ({
         <CustomButton
           buttonText="Done"
           onCustomButtonClick={handleCloseClick}
+          icon={<DoneRounded />}
         />
       </Box>
     </Modal>

@@ -37,7 +37,7 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
   const [animationStage, setAnimationStage] = useState<number>(0);
 
   useEffect(() => {
-    const timeouts = [100, 400, 500]; // Adjust timing as needed
+    const timeouts = [100, 400, 500];
     const animateStatistics = () => {
       if (animationStage < 4) {
         const timeoutId = setTimeout(() => {
@@ -145,8 +145,8 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
             sx={{
               padding: 2,
               color: "whitesmoke",
-              width: "250px",
-              height: "300px",
+              width: "230px",
+              height: "275px",
               marginBottom: 2,
               backgroundColor: "#4a4e69",
               opacity: animationStage >= index + 1 ? 1 : 0, // Fade in based on animation stage
@@ -162,8 +162,8 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
             <Divider
               sx={{
                 backgroundColor: "whitesmoke",
-                marginTop: "8px", // Adjust the margin top
-                marginBottom: "8px", // Adjust the margin bottom
+                marginTop: "8px",
+                marginBottom: "8px",
               }}
             />
             {statistic.render(statistic.value)}

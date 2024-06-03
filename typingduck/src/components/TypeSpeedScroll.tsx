@@ -60,11 +60,6 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     }
   }, [onGetNewText]);
 
-  // For debugging
-  // useEffect(() => {
-  //   (window as any).textContainerRef = textContainerRef;
-  // }, [])
-
   const renderTextWithCursor = () => {
     const textBeforeCursor = renderedText.substring(0, cursorIndex);
     const textAfterCursor = renderedText.substring(cursorIndex);
@@ -184,7 +179,7 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
       }
 
       // if we've reached the end of the generated text
-      if (textTyped.length === renderedText.length - 1) {
+      if (textTyped.length >= renderedText.length - 1) {
         finishTyping();
         return;
       }
