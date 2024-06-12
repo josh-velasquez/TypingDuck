@@ -14,3 +14,8 @@ Test out keyboard keys if they work
 ## Tech Stack
 React -> TypeScript  
 Material UI  
+
+
+## Deployment
+To deploy to gh pages
+```npm run deploy```

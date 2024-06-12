@@ -77,9 +77,7 @@ const TypeTestPage = () => {
     return document.querySelector(selector);
   };
 
-  const getProgress = (): number => {
-    return (numKeyStrokes / NUM_KEYS) * 100;
-  };
+  const getProgress = (): number => (numKeyStrokes / NUM_KEYS) * 100;
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -91,19 +89,20 @@ const TypeTestPage = () => {
       }
 
       key.setAttribute("data-pressed", "on");
-
-      if (!keyPressed.includes(e.key)) {
+      const convertSpaceKey = e.key === " " ? "Space" : e.key;
+      if (!keyPressed.includes(convertSpaceKey)) {
         setNumKeyStrokes((prev) => prev + 1);
-        const convertSpaceKey = e.key === " " ? "Space" : e.key;
         setKeyPressed((prev) => [...prev, convertSpaceKey]);
-        const keyText = splitWords(convertSpaceKey);
-        setKeyVisible(keyText);
         let newKey = getLowerCaseId(e.key);
         handleKeyHighlight(newKey, true);
         if (numKeyStrokes >= Math.round(NUM_KEYS / 2)) {
           setProgressColour("#000");
         }
       }
+
+      // show key pressed
+      const keyText = splitWords(convertSpaceKey);
+      setKeyVisible(keyText);
     },
     [keyPressed]
   );
@@ -143,7 +142,7 @@ const TypeTestPage = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="70vh"
+        marginTop="100px"
       >
         <Container>
           <Box
