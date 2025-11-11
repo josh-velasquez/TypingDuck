@@ -26,7 +26,7 @@ interface WordStatsInfo {
 interface Statistic {
   label: string;
   value: WordStatsInfo | AccuracyStatsInfo | ErrorStatsInfo;
-  render: (stats: any) => JSX.Element;
+  render: (stats: WordStatsInfo | AccuracyStatsInfo | ErrorStatsInfo) => JSX.Element;
 }
 
 interface StatisticsInterface {
@@ -55,68 +55,99 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
     {
       label: "word",
       value: statsInfo.wordStats,
-      render: (stats: WordStatsInfo) => (
-        <>
-          <Typography variant="subtitle1">
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>wpm:</span>
-              <span>{stats.wpm}</span>
+      render: (stats: WordStatsInfo | AccuracyStatsInfo | ErrorStatsInfo) => {
+        const wordStats = stats as WordStatsInfo;
+        return (
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                WPM
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--accent-tertiary)", fontWeight: 600 }}>
+                {wordStats.wpm}
+              </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>cpm:</span>
-              <span>{stats.cpm}</span>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                Keystrokes
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--neutral-100)", fontWeight: 600 }}>
+                {wordStats.keystrokes}
+              </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>keystrokes:</span>
-              <span>{stats.keystrokes}</span>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                Words
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--neutral-100)", fontWeight: 600 }}>
+                {wordStats.totalWordsTyped}
+              </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>total words typed:</span>
-              <span>{stats.totalWordsTyped}</span>
-            </Box>
-          </Typography>
-        </>
-      ),
+          </Box>
+        );
+      },
     },
     {
       label: "error",
       value: statsInfo.errorStats,
-      render: (stats: ErrorStatsInfo) => (
-        <>
-          <Typography variant="subtitle1">
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>errors:</span>
-              <span>{stats.errors}</span>
+      render: (stats: WordStatsInfo | AccuracyStatsInfo | ErrorStatsInfo) => {
+        const errorStats = stats as ErrorStatsInfo;
+        return (
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                Errors
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--accent-danger)", fontWeight: 600 }}>
+                {errorStats.errors}
+              </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>corrected errors:</span>
-              <span>{stats.correctedErrors}</span>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                Corrected
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--accent-tertiary)", fontWeight: 600 }}>
+                {errorStats.correctedErrors}
+              </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>error rate (%):</span>
-              <span>{stats.errorRate}</span>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                Error Rate
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--accent-danger)", fontWeight: 600 }}>
+                {errorStats.errorRate}%
+              </Typography>
             </Box>
-          </Typography>
-        </>
-      ),
+          </Box>
+        );
+      },
     },
     {
       label: "accuracy",
       value: statsInfo.accuracyStats,
-      render: (stats: AccuracyStatsInfo) => (
-        <>
-          <Typography variant="subtitle1">
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>accuracy (%):</span>
-              <span>{stats.accuracy}</span>
+      render: (stats: WordStatsInfo | AccuracyStatsInfo | ErrorStatsInfo) => {
+        const accuracyStats = stats as AccuracyStatsInfo;
+        return (
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                Accuracy
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--accent-secondary)", fontWeight: 600 }}>
+                {accuracyStats.accuracy}%
+              </Typography>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <span>time (seconds):</span>
-              <span>{stats.time}</span>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.75rem" }}>
+                Time
+              </Typography>
+              <Typography variant="h5" sx={{ color: "var(--neutral-100)", fontWeight: 600 }}>
+                {accuracyStats.time}s
+              </Typography>
             </Box>
-          </Typography>
-        </>
-      ),
+          </Box>
+        );
+      },
     },
   ];
 
@@ -126,46 +157,56 @@ const Statistics: React.FC<StatisticsInterface> = ({ statsInfo }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "40vh",
+        minHeight: "40vh",
+        padding: 2,
       }}
+      role="region"
+      aria-label="Typing test statistics"
     >
       <Box
         sx={{
-          display: "flex",
-          width: "1000px",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          textAlign: "center",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 3,
+          width: "100%",
+          maxWidth: "900px",
+          "@media (max-width: 768px)": {
+            gridTemplateColumns: "1fr",
+            gap: 2,
+          },
         }}
       >
         {statisticsData.map((statistic, index) => (
           <Paper
             key={index}
-            elevation={3}
+            elevation={0}
             sx={{
-              padding: 2,
-              color: "whitesmoke",
-              width: "230px",
-              height: "275px",
-              marginBottom: 2,
-              backgroundColor: "#4a4e69",
-              opacity: animationStage >= index + 1 ? 1 : 0, // Fade in based on animation stage
-              transition:
-                "opacity 0.5s ease-in-out, transform 0.4s ease-in-out",
-              boxShadow: "5px 100px 200px rgba(0, 0, 0, 0.5)",
+              padding: 2.5,
+              backgroundColor: "var(--primary-surface)",
+              border: "1px solid var(--neutral-700)",
+              borderRadius: "var(--radius-lg)",
+              opacity: animationStage >= index + 1 ? 1 : 0,
+              transform: animationStage >= index + 1 ? "translateY(0)" : "translateY(10px)",
+              transition: "all 0.4s ease-in-out",
               "&:hover": {
-                transform: "translateY(-40px)",
+                backgroundColor: "var(--primary-elevated)",
+                borderColor: "var(--accent-primary)",
               },
             }}
           >
-            <Typography variant="h6">{statistic.label}</Typography>
-            <Divider
-              sx={{
-                backgroundColor: "whitesmoke",
-                marginTop: "8px",
-                marginBottom: "8px",
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                color: "var(--accent-primary)",
+                fontWeight: 600,
+                textTransform: "capitalize",
+                marginBottom: 1.5,
+                textAlign: "center",
               }}
-            />
+            >
+              {statistic.label}
+            </Typography>
+            
             {statistic.render(statistic.value)}
           </Paper>
         ))}

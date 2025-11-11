@@ -8,7 +8,10 @@ const NavigationBar = () => {
   return (
     <AppBar
       position="static"
-      sx={{ background: "transparent", boxShadow: "none" }}
+      sx={{ 
+        background: "var(--primary-surface)", 
+        borderBottom: "1px solid var(--neutral-700)"
+      }}
     >
       <Toolbar>
         <Link to="/">
@@ -29,8 +32,12 @@ const NavigationBar = () => {
               to="/typing-speed"
               style={{
                 textDecoration: "none",
-                color:
-                  location.pathname === "/typing-speed" ? "#e1b2b2" : "inherit",
+                color: location.pathname === "/typing-speed" ? "var(--accent-primary)" : "var(--neutral-100)",
+                fontWeight: location.pathname === "/typing-speed" ? 500 : 400,
+                padding: "8px 16px",
+                borderRadius: "var(--radius-md)",
+                transition: "var(--transition-fast)",
+                background: location.pathname === "/typing-speed" ? "var(--primary-elevated)" : "transparent",
               }}
             >
               typing speed
@@ -41,14 +48,19 @@ const NavigationBar = () => {
               to="/typing-test"
               style={{
                 textDecoration: "none",
-                color:
-                  location.pathname === "/typing-test" ? "#e1b2b2" : "inherit",
+                color: location.pathname === "/typing-test" ? "var(--accent-primary)" : "var(--neutral-100)",
+                fontWeight: location.pathname === "/typing-test" ? 500 : 400,
+                padding: "8px 16px",
+                borderRadius: "var(--radius-md)",
+                transition: "var(--transition-fast)",
+                background: location.pathname === "/typing-test" ? "var(--primary-elevated)" : "transparent",
               }}
             >
               typing test
             </Link>
           </Typography>
         </Box>
+        
       </Toolbar>
     </AppBar>
   );

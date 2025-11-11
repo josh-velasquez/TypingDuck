@@ -1,3 +1,411 @@
+/* CSS Custom Properties for Design System */
+:root {
+  /* Primary Colors - Modern Dark Theme (Lighter) */
+  --primary-bg: #1a1a1a;
+  --primary-surface: #2a2a2a;
+  --primary-elevated: #3a3a3a;
+  
+  /* Accent Colors - Modern & Vibrant */
+  --accent-primary: #9333ea;
+  --accent-secondary: #10b981;
+  --accent-tertiary: #f59e0b;
+  --accent-danger: #ef4444;
+  
+  /* Neutral Colors - Clean Grays */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms ease-in-out;
+  --transition-slow: 350ms ease-in-out;
+}
+
+/* Cursor Animation */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Light Theme */
+[data-theme="light"] {
+  --primary-bg: #ffffff;
+  --primary-surface: #f8fafc;
+  --primary-elevated: #f1f5f9;
+  
+  --accent-primary: #7c3aed;
+  --accent-secondary: #059669;
+  --accent-tertiary: #d97706;
+  --accent-danger: #dc2626;
+  
+  --neutral-50: #171717;
+  --neutral-100: #262626;
+  --neutral-200: #404040;
+  --neutral-300: #525252;
+  --neutral-400: #737373;
+  --neutral-500: #a3a3a3;
+  --neutral-600: #d4d4d4;
+  --neutral-700: #e5e5e5;
+  --neutral-800: #f5f5f5;
+  --neutral-900: #fafafa;
+}
+
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
 body {
-  background-color: #2f243a;
+  background: var(--primary-bg);
+  color: var(--neutral-100);
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--neutral-100);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1.125rem; }
+
+p {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--neutral-300);
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Component Styles */
+.words {
+  background: var(--primary-surface);
+  color: var(--neutral-100);
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--neutral-700);
+  transition: var(--transition-normal);
+}
+
+.infoBox {
+  background: var(--primary-elevated);
+  color: var(--neutral-100);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--neutral-700);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 18%;
+  min-width: 200px;
+  transition: var(--transition-normal);
+}
+
+.input {
+  text-align: center;
+  width: 100%;
+  margin: var(--spacing-xl) 0;
+}
+
+.user_input {
+  background: var(--primary-surface);
+  color: var(--neutral-100);
+  border: 1px solid var(--neutral-600);
+  border-radius: var(--radius-lg);
+  font-size: 1.5rem;
+  font-weight: 500;
+  height: 80px;
+  width: 100%;
+  padding: var(--spacing-xl);
+  transition: var(--transition-normal);
+}
+
+.user_input:focus {
+  border-color: var(--accent-primary);
+  outline: none;
+}
+
+.user_input::placeholder {
+  color: var(--neutral-500);
+}
+
+.nav-link {
+  color: var(--neutral-100);
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+}
+
+.nav-link:hover {
+  color: var(--accent-primary);
+  background: rgba(233, 69, 96, 0.1);
+}
+
+.current {
+  color: var(--accent-primary);
+  background: rgba(233, 69, 96, 0.1);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 1100px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.statistics {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing-3xl);
+  margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-lg);
+}
+
+.contact {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  padding-top: 10%;
+  gap: var(--spacing-lg);
+}
+
+.restart, .import {
+  background: var(--primary-surface);
+  color: var(--neutral-100);
+  border: 1px solid var(--neutral-600);
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.restart:hover, .import:hover {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.buttons_area {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.logo, .icon {
+  transition: var(--transition-normal);
+  border-bottom: 2px solid transparent;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+}
+
+.icon {
+  height: 70px;
+  width: 70px;
+}
+
+.logo:hover, .icon:hover {
+  transform: scale(1.1);
+  border-bottom-color: var(--accent-primary);
+}
+
+.incorrect_char {
+  color: var(--accent-danger);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.correct_char {
+  color: var(--accent-secondary);
+  font-weight: 500;
+}
+
+.header_title {
+  color: var(--neutral-100);
+  text-align: center;
+  padding-bottom: var(--spacing-md);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.typingResult {
+  margin-top: var(--spacing-xl);
+  color: var(--neutral-100);
+  display: block;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+}
+
+.progressBar {
+  width: 100%;
+  max-width: 667px;
+  border-radius: var(--radius-lg);
+  margin: var(--spacing-xl) auto;
+  border: 1px solid var(--neutral-600);
+  background: var(--primary-surface);
+  overflow: hidden;
+}
+
+#progressBar {
+  width: 0%;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--accent-primary);
+  transition: width var(--transition-slow);
+}
+
+.progressPercent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--neutral-100);
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+#importFile {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: var(--spacing-md);
+  }
+  
+  .statistics {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .infoBox {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .buttons_area {
+    flex-direction: column;
+  }
+  
+  .header_title {
+    font-size: 2rem;
+  }
+  
+  .words {
+    font-size: 1.25rem;
+    padding: var(--spacing-lg);
+  }
+  
+  .user_input {
+    font-size: 1.25rem;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header_title {
+    font-size: 1.75rem;
+  }
+  
+  .words {
+    font-size: 1.125rem;
+    padding: var(--spacing-md);
+  }
+  
+  .user_input {
+    font-size: 1.125rem;
+    height: 50px;
+  }
+}
+
+/* Simple Hover Effects */
+.hover-lift {
+  transition: var(--transition-normal);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
 }

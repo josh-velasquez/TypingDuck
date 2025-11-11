@@ -77,6 +77,7 @@ const TypeSpeedPage = () => {
       >
         {!showStats ? (
           <Container>
+
             {text && (
               <TypeSpeedScroll
                 text={text}
@@ -94,20 +95,9 @@ const TypeSpeedPage = () => {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "center",
-                marginTop: "90px",
-              }}
-            >
-              <Typography style={{ color: "#cccccc80" }}>
-                cmd + r to reset
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
                 flexDirection: "row",
-                justifyContent: "space-between",
-                marginTop: "10px",
+                justifyContent: "center",
+                marginTop: "20px",
               }}
             >
               <CustomButton
@@ -115,17 +105,51 @@ const TypeSpeedPage = () => {
                 onCustomButtonClick={handleCustomTextClick}
                 icon={<ImportExport />}
                 disableKeyInvoke
+                sx={{
+                  backgroundColor: "transparent",
+                  color: "var(--neutral-500)",
+                  border: "1px solid var(--neutral-600)",
+                  fontSize: "0.8rem",
+                  padding: "8px 16px",
+                  minWidth: "auto",
+                  "&:hover": {
+                    backgroundColor: "var(--primary-elevated)",
+                    color: "var(--neutral-300)",
+                    borderColor: "var(--neutral-500)",
+                  },
+                }}
               />
             </Box>
           </Container>
         ) : (
           <Container>
             <Statistics statsInfo={statsInfo} />
-            <CustomButton
-              buttonText="Reset"
-              onCustomButtonClick={handlOnResetClick}
-              icon={<RestartAlt />}
-            />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
+            >
+              <CustomButton
+                buttonText="Reset"
+                onCustomButtonClick={handlOnResetClick}
+                icon={<RestartAlt />}
+                sx={{
+                  backgroundColor: "transparent",
+                  color: "var(--neutral-500)",
+                  border: "1px solid var(--neutral-600)",
+                  fontSize: "0.8rem",
+                  padding: "8px 16px",
+                  minWidth: "auto",
+                  "&:hover": {
+                    backgroundColor: "var(--primary-elevated)",
+                    borderColor: "var(--neutral-500)",
+                    color: "var(--neutral-300)",
+                  },
+                }}
+              />
+            </Box>
           </Container>
         )}
       </Box>

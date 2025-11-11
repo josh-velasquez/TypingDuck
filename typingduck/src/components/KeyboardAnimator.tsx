@@ -33,9 +33,10 @@ const KeyboardAnimator: React.FC<KeyboardAnimatorInterface> = ({
           variant="h2"
           sx={{
             height: 60,
-            color: "whitesmoke",
+            color: "var(--accent-primary)",
             textAlign: "center",
             marginBottom: 5,
+            fontWeight: 500,
           }}
         >
           {wordToAnimate ? wordToAnimate : " "}

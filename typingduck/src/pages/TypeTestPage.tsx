@@ -12,7 +12,7 @@ import CustomButton from "../components/CustomButton";
 import { splitWords } from "../util/TextUtil";
 import { RestartAlt } from "@mui/icons-material";
 
-const TypeTestPage = () => {
+const TypeTestPage: React.FC = () => {
   const [keyPressed, setKeyPressed] = useState<string[]>([]);
   const [numKeyStrokes, setNumKeyStrokes] = useState<number>(0);
   const [progressColour, setProgressColour] = useState<string>("#fff");
@@ -26,27 +26,44 @@ const TypeTestPage = () => {
     return key.length > 1 ? key : key.toLowerCase();
   };
 
-  const handleOnResetClick = () => {
-    keyPressed.forEach((key) => {
-      handleKeyHighlight(key, false);
+  const handleOnResetClick = (): void => {
+    // Clear all highlighted keys by removing the class from all keyboard elements
+    const allKeys = document.querySelectorAll('.keyboard div');
+    allKeys.forEach((key) => {
+      key.classList.remove('key-highlighted');
+      // Also remove any pressed state attributes
+      key.removeAttribute('data-pressed');
     });
+
     setKeyPressed([]);
     setNumKeyStrokes(0);
     setProgressColour("#fff");
   };
 
-  const handleKeyHighlight = (key: string, highlight: boolean) => {
+  const handleKeyHighlight = (key: string, highlight: boolean): void => {
     try {
       let currentKey;
       // if we press space
-      if (key === " ") {
+      if (key === " " || key === "Space") {
         currentKey = document.getElementById("Space");
       } else if (key === "Shift" || key === "Alt" || key === "Meta") {
         const rightKey = document.getElementById(key + "-R");
         if (rightKey) {
-          rightKey.style.backgroundColor = highlight ? "#e1b2b2" : "#2f243a";
-          rightKey.style.color = highlight ? "#2f243a" : "#e1b2b2";
+          if (highlight) {
+            rightKey.classList.add("key-highlighted");
+          } else {
+            rightKey.classList.remove("key-highlighted");
+          }
         }
+        currentKey = document.getElementById(key);
+      } else if (key === "ArrowUp") {
+        // Handle up arrow key specifically
+        currentKey = document.getElementById("ArrowUp");
+      } else if (key === "ArrowDown") {
+        // Handle down arrow key specifically
+        currentKey = document.getElementById("ArrowDown");
+      } else if (key === "ArrowLeft" || key === "ArrowRight") {
+        // Handle left/right arrow keys with their specific IDs
         currentKey = document.getElementById(key);
       } else {
         const newKey = getLowerCaseId(key);
@@ -54,10 +71,13 @@ const TypeTestPage = () => {
       }
 
       if (currentKey) {
-        currentKey.style.backgroundColor = highlight ? "#e1b2b2" : "#2f243a";
-        currentKey.style.color = highlight ? "#2f243a" : "#e1b2b2";
+        if (highlight) {
+          currentKey.classList.add("key-highlighted");
+        } else {
+          currentKey.classList.remove("key-highlighted");
+        }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.warn("Key error: ", error);
     }
   };
@@ -93,8 +113,8 @@ const TypeTestPage = () => {
       if (!keyPressed.includes(convertSpaceKey)) {
         setNumKeyStrokes((prev) => prev + 1);
         setKeyPressed((prev) => [...prev, convertSpaceKey]);
-        let newKey = getLowerCaseId(e.key);
-        handleKeyHighlight(newKey, true);
+        // Use the original key name for highlighting, not the lowercase version
+        handleKeyHighlight(convertSpaceKey, true);
         if (numKeyStrokes >= Math.round(NUM_KEYS / 2)) {
           setProgressColour("#000");
         }
@@ -145,6 +165,7 @@ const TypeTestPage = () => {
         marginTop="100px"
       >
         <Container>
+
           <Box
             sx={{ marginBottom: "30px" }}
             display="flex"
@@ -152,17 +173,59 @@ const TypeTestPage = () => {
             alignItems="center"
           >
             <Fade in={showKey} timeout={{ enter: 200, exit: 500 }}>
-              <Typography variant="h4" color={"#e1b2b2"}>
+              <Typography
+                variant="h4"
+                sx={{
+                  color: "var(--accent-primary)",
+                  fontWeight: 500,
+                }}
+              >
                 {keyVisible === "" ? "type to start..." : keyVisible}
               </Typography>
             </Fade>
           </Box>
-          <KeyboardLayout />
-          {extendKeyboard && (
-            <Box sx={{ marginTop: 2, marginBottom: 14 }}>
+            <Box
+              sx={{
+                position: "relative",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                overflow: "visible",
+                width: "100%",
+                marginLeft: "-50px",
+                marginTop: "-50px",
+              }}
+            >
+            <Box
+              sx={{
+                position: "relative",
+                zIndex: 2,
+                transform: extendKeyboard ? "scale(0.9)" : "scale(1.1)",
+                transformOrigin: "left top",
+                transition: "transform 0.5s ease-in-out",
+                display: "inline-block",
+              }}
+            >
+              <KeyboardLayout />
+            </Box>
+            
+            <Box
+              sx={{
+                position: "absolute",
+                left: "75%",
+                top: "50px",
+                zIndex: 3,
+                transformOrigin: "left top",
+                opacity: extendKeyboard ? 1 : 0,
+                visibility: extendKeyboard ? "visible" : "hidden",
+                transform: extendKeyboard ? "scale(0.9) translateX(0)" : "scale(0.9) translateX(-100px)",
+                transition: "all 0.5s ease-in-out",
+              }}
+            >
               <ExtendedKeyboardLayout />
             </Box>
-          )}
+
+          </Box>
           {showProgress && (
             <Box
               sx={{
@@ -191,12 +254,12 @@ const TypeTestPage = () => {
                   variant="determinate"
                   value={getProgress()}
                   sx={{
-                    borderRadius: 4,
-                    border: "3px solid #e1b2b2",
+                    borderRadius: "var(--radius-lg)",
+                    border: "1px solid var(--neutral-600)",
                     height: 40,
-                    backgroundColor: "transparent",
+                    backgroundColor: "var(--primary-surface)",
                     "& .MuiLinearProgress-bar": {
-                      backgroundColor: "#e1b2b2",
+                      background: "var(--accent-primary)",
                     },
                   }}
                 />
@@ -205,11 +268,45 @@ const TypeTestPage = () => {
           )}
         </Container>
       </Box>
-      <CustomButton
-        buttonText="Reset"
-        onCustomButtonClick={handleOnResetClick}
-        icon={<RestartAlt />}
-      />
+      
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px", gap: "10px" }}>
+        <CustomButton
+          buttonText={extendKeyboard ? "Collapse Keyboard" : "Extend Keyboard"}
+          onCustomButtonClick={() => setExtendKeyboard(!extendKeyboard)}
+          sx={{
+            backgroundColor: "transparent",
+            color: "var(--neutral-500)",
+            border: "1px solid var(--neutral-600)",
+            fontSize: "0.8rem",
+            padding: "8px 16px",
+            minWidth: "auto",
+            "&:hover": {
+              backgroundColor: "var(--primary-elevated)",
+              borderColor: "var(--neutral-500)",
+              color: "var(--neutral-300)",
+            },
+          }}
+        />
+        
+        <CustomButton
+          buttonText="Reset"
+          onCustomButtonClick={handleOnResetClick}
+          icon={<RestartAlt />}
+          sx={{
+            backgroundColor: "transparent",
+            color: "var(--neutral-500)",
+            border: "1px solid var(--neutral-600)",
+            fontSize: "0.8rem",
+            padding: "8px 16px",
+            minWidth: "auto",
+            "&:hover": {
+              backgroundColor: "var(--primary-elevated)",
+              borderColor: "var(--neutral-500)",
+              color: "var(--neutral-300)",
+            },
+          }}
+        />
+      </Box>
     </Box>
   );
 };

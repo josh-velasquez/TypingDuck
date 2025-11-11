@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { StatsInfo } from "./Statistics";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo, memo } from "react";
 import { getNumWords } from "../util/TextUtil";
 
 interface TypeSpeedScrollInterface {
@@ -36,10 +36,31 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
   const [errorsCount, setErrorsCount] = useState<number>(0);
   const [correctedErrorsCounter, setCorrectedErrorsCounter] =
     useState<number>(0);
+  
+  // Real-time statistics
+  const [currentWPM, setCurrentWPM] = useState<number>(0);
+  const [currentAccuracy, setCurrentAccuracy] = useState<number>(0);
+  
 
   const textContainerRef = useRef<HTMLDivElement>(null);
   const keystrokesRef = useRef<string>("");
   const cursorRef = useRef<HTMLSpanElement>(null);
+
+  const calculateRealTimeStats = useCallback(() => {
+    if (startTime === 0 || textTyped.length === 0) {
+      setCurrentWPM(0);
+      setCurrentAccuracy(0);
+      return;
+    }
+
+    const timeElapsed = (Date.now() - startTime) / 1000; // in seconds
+    const averageWordLength = 5;
+    const wpm = Math.round((textTyped.length / averageWordLength) / (timeElapsed / 60));
+    const accuracy = textTyped.length > 0 ? Math.round(((textTyped.length - errorsCount) / textTyped.length) * 100) : 0;
+    
+    setCurrentWPM(wpm);
+    setCurrentAccuracy(accuracy);
+  }, [startTime, textTyped.length, errorsCount]);
 
   const resetType = useCallback(() => {
     if (timerInterval !== null) {
@@ -51,6 +72,8 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     setErrorsCount(0);
     setTimer(TIME_LIMIT);
     setStartTime(0);
+    setCurrentWPM(0);
+    setCurrentAccuracy(0);
     keystrokesRef.current = "";
 
     // we only try to get a new text if the user refreshes the page manually
@@ -58,37 +81,45 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     if (!reset) {
       onGetNewText();
     }
-  }, [onGetNewText]);
+  }, [onGetNewText, reset]);
 
-  const renderTextWithCursor = () => {
+
+  const renderTextWithCursor = useMemo(() => {
     const textBeforeCursor = renderedText.substring(0, cursorIndex);
     const textAfterCursor = renderedText.substring(cursorIndex);
-    // TODO: insert characters that user input even when its wrong.. make sure to delete it when they press backspace
+    
     return (
       <Typography
         sx={{
-          fontFamily: "Courier New, monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "1.3rem",
-          color: "white",
+          color: "var(--neutral-100)",
           textAlignLast: "center",
           letterSpacing: "0.2em",
         }}
       >
-        {textBeforeCursor.split("").map((char, index) => (
-          <span
-            key={index}
-            style={{ color: textTyped[index] === char ? "#e1b2b2" : "red" }}
-          >
-            {char}
-          </span>
-        ))}
-        <span ref={cursorRef} style={{ color: "#e1b2b2" }}>
+        {textBeforeCursor.split("").map((char, index) => {
+          const typedChar = textTyped[index];
+          const isCorrect = typedChar && typedChar.toLowerCase() === char.toLowerCase();
+          return (
+            <span
+              key={index}
+              style={{ 
+                color: isCorrect ? "var(--accent-tertiary)" : "var(--accent-danger)",
+                fontWeight: 500
+              }}
+            >
+              {char}
+            </span>
+          );
+        })}
+        <span ref={cursorRef} style={{ color: "var(--accent-primary)" }}>
           |
         </span>
         {textAfterCursor}
       </Typography>
     );
-  };
+  }, [renderedText, cursorIndex, textTyped]);
 
   const finishTyping = () => {
     const averageWordLength = 5;
@@ -138,12 +169,13 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
     if (timer === 0) {
       finishTyping();
       resetType();
-    } else if (startTime > 0) {
+    } else if (startTime > 0 && textTyped.length > 0) {
       interval = setInterval(() => {
-        setTimer(
-          Math.max(TIME_LIMIT - Math.floor((Date.now() - startTime) / 1000), 0)
-        );
-      }, 1000);
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const newTimer = Math.max(TIME_LIMIT - elapsed, 0);
+        setTimer(newTimer);
+        calculateRealTimeStats();
+      }, 100);
     }
 
     return () => {
@@ -151,7 +183,7 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
         clearInterval(interval);
       }
     };
-  }, [timer, startTime]);
+  }, [timer, startTime, textTyped.length, calculateRealTimeStats, finishTyping, resetType]);
 
   useEffect(() => {
     // if the parent component resets this component
@@ -163,19 +195,22 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      // Keyboard shortcuts
       if (e.metaKey && e.key === "r") {
         e.preventDefault();
         resetType();
         return;
       }
-
-      if (startTime === 0) {
-        setStartTime(Date.now());
-      }
+      
 
       if (e.key === "Tab" || (e.key.length !== 1 && e.key !== "Backspace")) {
         e.preventDefault();
         return;
+      }
+
+      // Only start timer when user actually types a valid character
+      if (startTime === 0 && e.key !== "Backspace") {
+        setStartTime(Date.now());
       }
 
       // if we've reached the end of the generated text
@@ -251,18 +286,68 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
 
   return (
     <>
-      <Box>
-        <Typography variant="h5" color={"#e1b2b2"}>
-          {timer} s
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 2 }}>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography 
+            variant="h5" 
+            sx={{ 
+              color: "var(--accent-primary)",
+              fontWeight: 500,
+              textAlign: "center"
+            }}
+          >
+            {timer} s
+          </Typography>
+        </Box>
+        
+        {/* Real-time Statistics */}
+        <Box sx={{ display: "flex", gap: 3 }} role="region" aria-label="Real-time typing statistics">
+          <Box sx={{ textAlign: "center" }}>
+            <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.875rem" }}>
+              WPM
+            </Typography>
+            <Typography 
+              variant="h6" 
+              sx={{ color: "var(--accent-tertiary)", fontWeight: 600 }}
+              aria-label={`Words per minute: ${currentWPM}`}
+            >
+              {currentWPM}
+            </Typography>
+          </Box>
+          <Box sx={{ textAlign: "center" }}>
+            <Typography variant="body2" sx={{ color: "var(--neutral-400)", fontSize: "0.875rem" }}>
+              Accuracy
+            </Typography>
+            <Typography 
+              variant="h6" 
+              sx={{ color: "var(--accent-secondary)", fontWeight: 600 }}
+              aria-label={`Typing accuracy: ${currentAccuracy} percent`}
+            >
+              {currentAccuracy}%
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+      {/* Keyboard Shortcuts */}
+      <Box sx={{ textAlign: "center", marginTop: 2, marginBottom: 2 }}>
+        <Typography 
+          variant="caption" 
+          sx={{ 
+            color: "var(--neutral-600)", 
+            fontSize: "0.7rem",
+            display: "block"
+          }}
+        >
+          Cmd+R: Reset
         </Typography>
       </Box>
+
       <Box
         sx={{
-          marginTop: "40px",
+          marginTop: "20px",
           textAlign: "center",
           height: "95px",
           maxWidth: "1400px",
-          // backgroundColor: "red",
           transition: "transform 0.5s ease-in-out",
           overflow: "auto",
           scrollbarWidth: "none", // For Firefox
@@ -271,11 +356,16 @@ const TypeSpeedScroll: React.FC<TypeSpeedScrollInterface> = ({
           },
         }}
         ref={textContainerRef}
+        role="textbox"
+        aria-label="Typing test text"
+        aria-live="polite"
+        aria-atomic="false"
+        tabIndex={0}
       >
-        {renderTextWithCursor()}
+        {renderTextWithCursor}
       </Box>
     </>
   );
 };
 
-export default TypeSpeedScroll;
+export default memo(TypeSpeedScroll);

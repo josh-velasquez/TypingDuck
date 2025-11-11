@@ -2,9 +2,21 @@ import React from "react";
 
 const KeyboardLayout: React.FC = () => {
   return (
-    <div className="keyboard">
+    <div 
+      className="keyboard"
+      role="application"
+      aria-label="Virtual keyboard layout"
+      aria-describedby="keyboard-instructions"
+    >
       <div className="keyboard__row keyboard__row--h1">
-        <div data-key="27" className="key--word" id="Escape">
+        <div 
+          data-key="27" 
+          className="key--word" 
+          id="Escape"
+          role="button"
+          aria-label="Escape key"
+          tabIndex={-1}
+        >
           <span>esc</span>
         </div>
         <div data-key="112" id="F1" className="key--fn">

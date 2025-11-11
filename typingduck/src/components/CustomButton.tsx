@@ -6,6 +6,8 @@ interface CustomButtonInterface {
   onCustomButtonClick: () => void;
   disableKeyInvoke?: boolean;
   icon?: ReactNode;
+  sx?: any;
+  selected?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonInterface> = ({
@@ -13,6 +15,8 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
   onCustomButtonClick,
   disableKeyInvoke,
   icon,
+  sx,
+  selected,
 }) => {
   const handleOnButtonClick = () => {
     onCustomButtonClick();
@@ -22,15 +26,21 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
       variant="contained"
       color="primary"
       sx={{
-        marginTop: 5,
-        backgroundColor: "#4A4E69",
+        background: selected ? "var(--accent-primary)" : "var(--primary-surface)",
+        color: selected ? "var(--primary-elevated)" : "var(--neutral-100)",
+        border: "1px solid var(--neutral-600)",
         alignSelf: "center",
-        borderRadius: "15px",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.4)",
+        borderRadius: "var(--radius-lg)",
         textTransform: "lowercase",
+        fontWeight: 500,
+        fontSize: "1rem",
+        padding: "12px 24px",
+        transition: "var(--transition-normal)",
         "&:hover": {
-          backgroundColor: "#C9ADA7",
+          background: "var(--accent-primary)",
+          borderColor: "var(--accent-primary)",
         },
+        ...sx,
       }}
       onClick={handleOnButtonClick}
       onKeyDown={(e) => {
