@@ -47,7 +47,7 @@ const InputModal: React.FC<InputModalInterface> = ({
           id="modal-modal-title"
           variant="h6"
           component="h2"
-          sx={{ 
+          sx={{
             marginBottom: 2,
             color: "var(--neutral-100)",
             fontWeight: 500

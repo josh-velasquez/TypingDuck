@@ -1,33 +1,27 @@
-/* CSS Custom Properties for Design System */
 :root {
-  /* Primary Colors - Modern Dark Theme (Lighter) */
-  --primary-bg: #1a1a1a;
-  --primary-surface: #2a2a2a;
-  --primary-elevated: #3a3a3a;
+  --primary-bg: #E8DAB2;    
+  --primary-surface: #4f6d7a; 
+  --primary-elevated: #c0d6df; 
   
-  /* Accent Colors - Modern & Vibrant */
-  --accent-primary: #9333ea;
-  --accent-secondary: #10b981;
-  --accent-tertiary: #f59e0b;
-  --accent-danger: #ef4444;
+  --accent-primary: #3a5560;
+  --accent-secondary: #020101; 
+  --accent-tertiary: #DD6E42; 
+  --accent-danger: #de4141; 
+
+  --neutral-50: #f5f5f5; 
+  --neutral-100: #8b7a6b; 
+  --neutral-200: #c0d6df; 
+  --neutral-300: #9bb5c0; 
+  --neutral-400: #8ba5b0; 
+  --neutral-500: #7a9ba8; 
+  --neutral-600: #6b8a9a; 
+  --neutral-700: #5a7a8a; 
+  --neutral-800: #4f6d7a;
+  --neutral-900: #3a5560; 
   
-  /* Neutral Colors - Clean Grays */
-  --neutral-50: #fafafa;
-  --neutral-100: #f5f5f5;
-  --neutral-200: #e5e5e5;
-  --neutral-300: #d4d4d4;
-  --neutral-400: #a3a3a3;
-  --neutral-500: #737373;
-  --neutral-600: #525252;
-  --neutral-700: #404040;
-  --neutral-800: #262626;
-  --neutral-900: #171717;
-  
-  /* Typography */
   --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
   
-  /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
@@ -36,20 +30,17 @@
   --spacing-2xl: 3rem;
   --spacing-3xl: 4rem;
   
-  /* Border Radius */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   
-  /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   
-  /* Transitions */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
@@ -61,29 +52,28 @@
   51%, 100% { opacity: 0; }
 }
 
-/* Light Theme */
-[data-theme="light"] {
-  --primary-bg: #ffffff;
-  --primary-surface: #f8fafc;
-  --primary-elevated: #f1f5f9;
-  
-  --accent-primary: #7c3aed;
-  --accent-secondary: #059669;
-  --accent-tertiary: #d97706;
-  --accent-danger: #dc2626;
-  
-  --neutral-50: #171717;
-  --neutral-100: #262626;
-  --neutral-200: #404040;
-  --neutral-300: #525252;
-  --neutral-400: #737373;
-  --neutral-500: #a3a3a3;
-  --neutral-600: #d4d4d4;
-  --neutral-700: #e5e5e5;
-  --neutral-800: #f5f5f5;
-  --neutral-900: #fafafa;
+@keyframes smoothBlink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
+.typing-cursor {
+  /* No blinking animation - cursor stays visible */
+  display: inline-block;
+  position: relative;
+}
+
+.current-char {
+  position: relative;
+}
+
+/* Smooth typing transitions */
+.typing-char {
+  transition: color 0.15s ease, background-color 0.15s ease;
+  border-radius: 2px;
+  padding: 0 1px;
+}
 
 /* Global Styles */
 * {

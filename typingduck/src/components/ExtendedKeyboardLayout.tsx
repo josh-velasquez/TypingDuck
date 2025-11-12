@@ -54,7 +54,7 @@ const ExtendedKeyboardLayout: React.FC = () => {
             -
           </div>
         </div>
-        
+
         <div style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <div style={{ display: "flex", gap: "8px" }}>
@@ -99,7 +99,7 @@ const ExtendedKeyboardLayout: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <div id="NumpadAdd" data-key="107" className="key--word" style={{ height: "108px" }}>
               +

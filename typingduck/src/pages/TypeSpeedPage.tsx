@@ -4,7 +4,7 @@ import Statistics, { StatsInfo } from "../components/Statistics";
 import CustomButton from "../components/CustomButton";
 import InputModal from "../components/InputModal";
 import { generateRandomText } from "../util/TextUtil";
-import TypeSpeedScroll from "../components/TypeSpeedScroll";
+import TypingSpeedTest from "../components/TypingSpeedTest";
 import { ImportExport, RestartAlt } from "@mui/icons-material";
 
 const TypeSpeedPage = () => {
@@ -79,7 +79,7 @@ const TypeSpeedPage = () => {
           <Container>
 
             {text && (
-              <TypeSpeedScroll
+              <TypingSpeedTest
                 text={text}
                 onFinishedTyping={onFinished}
                 reset={resetTypingSpeed}
@@ -113,9 +113,9 @@ const TypeSpeedPage = () => {
                   padding: "8px 16px",
                   minWidth: "auto",
                   "&:hover": {
-                    backgroundColor: "var(--primary-elevated)",
-                    color: "var(--neutral-300)",
-                    borderColor: "var(--neutral-500)",
+                    backgroundColor: "var(--accent-tertiary)",
+                    color: "var(--primary-bg)",
+                    borderColor: "var(--accent-tertiary)",
                   },
                 }}
               />
@@ -143,9 +143,9 @@ const TypeSpeedPage = () => {
                   padding: "8px 16px",
                   minWidth: "auto",
                   "&:hover": {
-                    backgroundColor: "var(--primary-elevated)",
-                    borderColor: "var(--neutral-500)",
-                    color: "var(--neutral-300)",
+                    backgroundColor: "var(--accent-tertiary)",
+                    color: "var(--primary-bg)",
+                    borderColor: "var(--accent-tertiary)",
                   },
                 }}
               />

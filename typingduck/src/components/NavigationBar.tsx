@@ -32,12 +32,12 @@ const NavigationBar = () => {
               to="/typing-speed"
               style={{
                 textDecoration: "none",
-                color: location.pathname === "/typing-speed" ? "var(--accent-primary)" : "var(--neutral-100)",
+                color: location.pathname === "/typing-speed" ? "var(--accent-tertiary)" : "var(--neutral-300)",
                 fontWeight: location.pathname === "/typing-speed" ? 500 : 400,
                 padding: "8px 16px",
                 borderRadius: "var(--radius-md)",
                 transition: "var(--transition-fast)",
-                background: location.pathname === "/typing-speed" ? "var(--primary-elevated)" : "transparent",
+                background: "transparent",
               }}
             >
               typing speed
@@ -48,12 +48,12 @@ const NavigationBar = () => {
               to="/typing-test"
               style={{
                 textDecoration: "none",
-                color: location.pathname === "/typing-test" ? "var(--accent-primary)" : "var(--neutral-100)",
+                color: location.pathname === "/typing-test" ? "var(--accent-tertiary)" : "var(--neutral-300)",
                 fontWeight: location.pathname === "/typing-test" ? 500 : 400,
                 padding: "8px 16px",
                 borderRadius: "var(--radius-md)",
                 transition: "var(--transition-fast)",
-                background: location.pathname === "/typing-test" ? "var(--primary-elevated)" : "transparent",
+                background: "transparent",
               }}
             >
               typing test

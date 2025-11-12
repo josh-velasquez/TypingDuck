@@ -53,12 +53,12 @@
 
 .keyboard__row > div[data-pressed],
 .keyboard__row > div:active {
-  background: var(--accent-primary, #9333ea);
+  background: var(--accent-primary, #e8dab2);
   color: var(--neutral-100, #ffffff);
   position: relative;
   top: 0.1em;
   transform: scale(0.95);
-  border-color: var(--accent-primary, #9333ea);
+  border-color: var(--accent-primary, #e8dab2);
 }
 
 .key--w3 {
@@ -152,7 +152,7 @@
   background: var(--accent-primary) !important;
   border-color: var(--accent-primary) !important;
   color: var(--primary-elevated) !important;
-  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  box-shadow: 0 0 20px rgba(232, 218, 178, 0.3);
 }
 
 /* Special handling for nested arrow keys */
@@ -160,7 +160,7 @@
   background: var(--accent-primary) !important;
   border-color: var(--accent-primary) !important;
   color: var(--primary-elevated) !important;
-  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  box-shadow: 0 0 20px rgba(232, 218, 178, 0.3);
 }
 
 /* Extended keyboard styling */
@@ -200,7 +200,7 @@
   background: var(--accent-primary) !important;
   border-color: var(--accent-primary) !important;
   color: var(--primary-elevated) !important;
-  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  box-shadow: 0 0 20px rgba(232, 218, 178, 0.3);
 }
 
 /* Special sizing for extended keyboard keys */

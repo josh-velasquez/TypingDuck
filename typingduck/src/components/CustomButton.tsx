@@ -25,6 +25,7 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
     <Button
       variant="contained"
       color="primary"
+      tabIndex={-1}
       sx={{
         background: selected ? "var(--accent-primary)" : "var(--primary-surface)",
         color: selected ? "var(--primary-elevated)" : "var(--neutral-100)",
@@ -40,12 +41,22 @@ const CustomButton: React.FC<CustomButtonInterface> = ({
           background: "var(--accent-primary)",
           borderColor: "var(--accent-primary)",
         },
+        "&:focus": {
+          outline: "none",
+        },
+        "&:focus-visible": {
+          outline: "none",
+        },
         ...sx,
       }}
-      onClick={handleOnButtonClick}
+      onClick={(e) => {
+        handleOnButtonClick();
+        (e.currentTarget as HTMLElement).blur();
+      }}
       onKeyDown={(e) => {
-        if (disableKeyInvoke && (e.key === " " || e.key === "Enter")) {
+        if (e.key === " " || e.key === "Enter") {
           e.preventDefault();
+          e.stopPropagation();
         }
       }}
     >

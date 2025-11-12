@@ -10,7 +10,7 @@ import KeyboardLayout from "../components/KeyboardLayout";
 import ExtendedKeyboardLayout from "../components/ExtendedKeyboardLayout";
 import CustomButton from "../components/CustomButton";
 import { splitWords } from "../util/TextUtil";
-import { RestartAlt } from "@mui/icons-material";
+import { RestartAlt, ExpandMore, ExpandLess } from "@mui/icons-material";
 
 const TypeTestPage: React.FC = () => {
   const [keyPressed, setKeyPressed] = useState<string[]>([]);
@@ -27,11 +27,9 @@ const TypeTestPage: React.FC = () => {
   };
 
   const handleOnResetClick = (): void => {
-    // Clear all highlighted keys by removing the class from all keyboard elements
     const allKeys = document.querySelectorAll('.keyboard div');
     allKeys.forEach((key) => {
       key.classList.remove('key-highlighted');
-      // Also remove any pressed state attributes
       key.removeAttribute('data-pressed');
     });
 
@@ -43,7 +41,6 @@ const TypeTestPage: React.FC = () => {
   const handleKeyHighlight = (key: string, highlight: boolean): void => {
     try {
       let currentKey;
-      // if we press space
       if (key === " " || key === "Space") {
         currentKey = document.getElementById("Space");
       } else if (key === "Shift" || key === "Alt" || key === "Meta") {
@@ -57,17 +54,13 @@ const TypeTestPage: React.FC = () => {
         }
         currentKey = document.getElementById(key);
       } else if (key === "ArrowUp") {
-        // Handle up arrow key specifically
         currentKey = document.getElementById("ArrowUp");
       } else if (key === "ArrowDown") {
-        // Handle down arrow key specifically
         currentKey = document.getElementById("ArrowDown");
       } else if (key === "ArrowLeft" || key === "ArrowRight") {
-        // Handle left/right arrow keys with their specific IDs
         currentKey = document.getElementById(key);
       } else {
-        const newKey = getLowerCaseId(key);
-        currentKey = document.getElementById(newKey);
+        currentKey = document.getElementById(getLowerCaseId(key));
       }
 
       if (currentKey) {
@@ -101,6 +94,16 @@ const TypeTestPage: React.FC = () => {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'BUTTON' || target.tagName === 'INPUT' || target.closest('button'))) {
+        return;
+      }
+
+      const activeElement = document.activeElement as HTMLElement;
+      if (activeElement && (activeElement.tagName === 'BUTTON' || activeElement.closest('button'))) {
+        activeElement.blur();
+      }
+
       e.preventDefault();
       const key = getKey(e);
       if (!key) {
@@ -113,18 +116,16 @@ const TypeTestPage: React.FC = () => {
       if (!keyPressed.includes(convertSpaceKey)) {
         setNumKeyStrokes((prev) => prev + 1);
         setKeyPressed((prev) => [...prev, convertSpaceKey]);
-        // Use the original key name for highlighting, not the lowercase version
         handleKeyHighlight(convertSpaceKey, true);
         if (numKeyStrokes >= Math.round(NUM_KEYS / 2)) {
           setProgressColour("#000");
         }
       }
 
-      // show key pressed
       const keyText = splitWords(convertSpaceKey);
       setKeyVisible(keyText);
     },
-    [keyPressed]
+    [keyPressed, numKeyStrokes]
   );
 
   const handleKeyUp = useCallback(
@@ -143,7 +144,7 @@ const TypeTestPage: React.FC = () => {
       document.body.removeEventListener("keydown", handleKeyDown);
       document.body.removeEventListener("keyup", handleKeyUp);
     };
-  }, []);
+  }, [handleKeyDown, handleKeyUp]);
 
   useEffect(() => {
     if (keyVisible) {
@@ -273,6 +274,7 @@ const TypeTestPage: React.FC = () => {
         <CustomButton
           buttonText={extendKeyboard ? "Collapse Keyboard" : "Extend Keyboard"}
           onCustomButtonClick={() => setExtendKeyboard(!extendKeyboard)}
+          icon={extendKeyboard ? <ExpandLess /> : <ExpandMore />}
           sx={{
             backgroundColor: "transparent",
             color: "var(--neutral-500)",
@@ -280,10 +282,13 @@ const TypeTestPage: React.FC = () => {
             fontSize: "0.8rem",
             padding: "8px 16px",
             minWidth: "auto",
+            position: "relative",
+            zIndex: 10,
+            pointerEvents: "auto",
             "&:hover": {
-              backgroundColor: "var(--primary-elevated)",
-              borderColor: "var(--neutral-500)",
-              color: "var(--neutral-300)",
+              backgroundColor: "var(--accent-tertiary)",
+              color: "var(--primary-bg)",
+              borderColor: "var(--accent-tertiary)",
             },
           }}
         />
@@ -300,9 +305,9 @@ const TypeTestPage: React.FC = () => {
             padding: "8px 16px",
             minWidth: "auto",
             "&:hover": {
-              backgroundColor: "var(--primary-elevated)",
-              borderColor: "var(--neutral-500)",
-              color: "var(--neutral-300)",
+              backgroundColor: "var(--accent-tertiary)",
+              color: "var(--primary-bg)",
+              borderColor: "var(--accent-tertiary)",
             },
           }}
         />
